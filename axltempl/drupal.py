@@ -8,43 +8,27 @@ import shutil
 def main():
     args = get_arguments()
 
+    if (args.force):
+        shutil.rmtree(args.directory, True)
+    if (os.path.isdir(args.directory)):
+        print(
+            f'The "{args.directory}" directory already exists. Please delete it before running or use the -f option.')
+        return 2
+
+    os.mkdir(args.directory)
+
     generateDrupalFiles(name=args.name, directory=args.directory, description=args.description,
-                        core=args.core_package, docroot=args.docroot, cacheService=args.cache, force=args.force)
+                        core=args.core_package, docroot=args.docroot, cacheService=args.cache)
+
+    if not args.no_install:
+        os.chdir(args.directory)
+        os.system('composer install -o')
+        os.chdir('..')
+
     return 0
 
 
-def get_arguments():
-    parser = argparse.ArgumentParser(
-        description='Scaffold a Drupal site template')
-    parser.add_argument('name', action='store',
-                        help='Name of your application package (e.g., axelerant/site)')
-    parser.add_argument('--directory', '-d', action='store', default='drupal',
-                        help='Directory where the files should be set up (e.g., drupal). The directory will be emptied.')
-    parser.add_argument('--description', '-D', action='store', default='',
-                        help='Description of the package')
-    parser.add_argument('--core-package', '-c', action='store', default='core',
-                        choices=['core', 'recommended'], help='Select the core package')
-    parser.add_argument('--docroot', '-r', action='store', default='web',
-                        help='The document root')
-    parser.add_argument('--force', '-f', action='store_true',
-                        help='Force delete the "drupal" directory if it exists')
-    parser.add_argument('--no-install', action='store_true',
-                        help='Do not run composer install')
-    parser.add_argument('--cache', action='store', default='',
-                        help='Add a cache service (either redis or memcache)')
-    return parser.parse_args()
-
-
-def generateDrupalFiles(name, directory='', description='', core='core', docroot='web', cacheService='', force=False):
-    if (force):
-        shutil.rmtree(directory, True)
-    if (os.path.isdir(directory)):
-        print(
-            f'The "{directory}" directory already exists. Please delete it before running or use the -f option.')
-        return 2
-
-    os.mkdir(directory)
-
+def generateDrupalFiles(name, directory='', description='', core='core', docroot='web', cacheService=''):
     composer = getComposerTemplate(
         name=name, description=description, core=core, docroot=docroot, cacheService=cacheService)
     composer = sortComposerPackages(composer)
@@ -115,3 +99,25 @@ def getGitignore(docroot):
         __name__, "files/drupal/.gitignore.template").decode()
     gitignore = gitignore.replace('{docroot}', docroot)
     return gitignore
+
+
+def get_arguments():
+    parser = argparse.ArgumentParser(
+        description='Scaffold a Drupal site template')
+    parser.add_argument('name', action='store',
+                        help='Name of your application package (e.g., axelerant/site)')
+    parser.add_argument('--directory', '-d', action='store', default='drupal',
+                        help='Directory where the files should be set up (e.g., drupal). The directory will be emptied.')
+    parser.add_argument('--description', '-D', action='store', default='',
+                        help='Description of the package')
+    parser.add_argument('--core-package', '-c', action='store', default='core',
+                        choices=['core', 'recommended'], help='Select the core package')
+    parser.add_argument('--docroot', '-r', action='store', default='web',
+                        help='The document root')
+    parser.add_argument('--force', '-f', action='store_true',
+                        help='Force delete the "drupal" directory if it exists')
+    parser.add_argument('--no-install', action='store_true',
+                        help='Do not run composer install')
+    parser.add_argument('--cache', action='store', default='',
+                        help='Add a cache service (either redis or memcache)')
+    return parser.parse_args()
