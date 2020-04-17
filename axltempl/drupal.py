@@ -8,46 +8,48 @@ import shutil
 def main():
     args = get_arguments()
 
-    if (args.force):
-        shutil.rmtree(args.directory, True)
     if (os.path.isdir(args.directory)):
-        print(
-            f'The "{args.directory}" directory already exists. Please delete it before running or use the -f option.')
-        return 2
+        if (not args.force):
+            print(
+                f'The "{args.directory}" directory already exists. Please delete it before running or use the -f option.')
+            return 2
+        print(f'Removing "{args.directory}" directory..."')
+        shutil.rmtree(args.directory, True)
 
     os.mkdir(args.directory)
+    os.chdir(args.directory)
+    os.system('git init; git commit --allow-empty -m "Initial commit"')
 
-    generateDrupalFiles(name=args.name, directory=args.directory, description=args.description,
+    generateDrupalFiles(name=args.name, description=args.description,
                         core=args.core_package, docroot=args.docroot, cacheService=args.cache)
 
     if not args.no_install:
-        os.chdir(args.directory)
         os.system('composer install -o')
-        os.chdir('..')
 
+    os.chdir('..')
     return 0
 
 
-def generateDrupalFiles(name, directory='', description='', core='core', docroot='web', cacheService=''):
+def generateDrupalFiles(name, description='', core='core', docroot='web', cacheService=''):
     composer = getComposerTemplate(
         name=name, description=description, core=core, docroot=docroot, cacheService=cacheService)
     composer = sortComposerPackages(composer)
-    with open(directory + '/composer.json', 'w') as composer_file:
+    with open('composer.json', 'w') as composer_file:
         json.dump(composer, composer_file, indent=4)
-    with open(directory + '/.gitignore', 'w') as gitignore_file:
+    with open('.gitignore', 'w') as gitignore_file:
         gitignore_file.write(getGitignore(docroot))
 
-    with open(directory + '/load.environment.php', 'w') as f:
+    with open('load.environment.php', 'w') as f:
         f.write(pkgutil.get_data(
             __name__, "files/drupal/load.environment.php").decode())
-    with open(directory + '/.env.example', 'w') as f:
+    with open('.env.example', 'w') as f:
         f.write(pkgutil.get_data(__name__, "files/drupal/.env.example").decode())
 
-    os.mkdir(directory + "/drush")
-    os.mkdir(directory + "/drush/sites")
-    with open(directory + '/drush/drush.yml', 'w') as f:
+    os.mkdir('drush')
+    os.mkdir('drush/sites')
+    with open('drush/drush.yml', 'w') as f:
         f.write(pkgutil.get_data(__name__, "files/drupal/drush.yml").decode())
-    with open(directory + '/drush/sites/self.site.yml', 'w') as f:
+    with open('drush/sites/self.site.yml', 'w') as f:
         f.write(pkgutil.get_data(__name__, "files/drupal/self.site.yml").decode())
 
     pass
