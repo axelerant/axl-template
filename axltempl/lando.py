@@ -34,16 +34,16 @@ def main():
 def generateLandoFiles(name, docroot, cache):
     services = ''
     tooling = ''
-    if (cache == 'memcached'):
-        services = """  cache:
-    type: memcached:1
-"""
-    elif (cache == 'redis'):
+    if (cache == 'redis'):
         services = """  cache:
     type: redis:5
 """
         tooling = """  redis-cli:
     service: cache
+"""
+    elif (cache == 'memcached'):
+        services = """  cache:
+    type: memcached:1
 """
 
     yml = pkgutil.get_data(__name__, 'files/lando/lando.yml').decode()
