@@ -1,0 +1,54 @@
+{
+  "name": "",
+  "description": "",
+  "type": "project",
+  "license": "proprietary",
+  "require": {
+      "php": ">=7.2",
+      "composer/installers": "^1.2",
+      "cweagans/composer-patches": "^1.6.5",
+      "drupal/console": "^1.9",
+      "drupal/core-composer-scaffold": "^8.8",
+      "drush/drush": "^9.7.1 | ^10.0",
+      "vlucas/phpdotenv": "^4.0",
+      "zaporylie/composer-drupal-optimizations": "^1.1"
+  },
+  "require-dev": {
+  },
+  "conflict": {
+      "drupal/drupal": "*"
+  },
+  "autoload": {
+    "files": ["load.environment.php"]
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+      "sort-packages": true
+  },
+  "repositories": [
+      {
+          "type": "composer",
+          "url": "https://packages.drupal.org/8"
+      }
+  ],
+  "extra": {
+      "composer-exit-on-patch-failure": true,
+      "patchLevel": {
+          "drupal/core": "-p2"
+      },
+      "drupal-scaffold": {
+          "locations": {
+              "web-root": "web/"
+          }
+      },
+      "installer-paths": {
+          "web/core": ["type:drupal-core"],
+          "web/libraries/{$name}": ["type:drupal-library"],
+          "web/modules/contrib/{$name}": ["type:drupal-module"],
+          "web/profiles/contrib/{$name}": ["type:drupal-profile"],
+          "web/themes/contrib/{$name}": ["type:drupal-theme"],
+          "drush/Commands/contrib/{$name}": ["type:drupal-drush"]
+      }
+  }
+}
