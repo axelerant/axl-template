@@ -24,6 +24,7 @@ setuptools.setup(
     entry_points={
         "console_scripts": [
             "init-drupal = axltempl.drupal:main",
+            "init-lando = axltempl.lando:main",
         ]
     },
     python_requires='>=3.6',

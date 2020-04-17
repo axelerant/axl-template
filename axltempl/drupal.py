@@ -28,6 +28,13 @@ def main():
     if not args.no_install:
         os.system('composer install -o')
 
+    if args.lando:
+        from . import lando
+        name = args.name.split('/')
+        name = name[1] if len(name) == 2 else name[0]
+        print("Adding Lando support...")
+        lando.generateLandoFiles(args.name, args.docroot, args.cache)
+
     os.chdir('..')
     return 0
 
@@ -120,4 +127,6 @@ def get_arguments():
                         help='Do not run composer install')
     parser.add_argument('--cache', action='store', default='',
                         help='Add a cache service (either redis or memcache)')
+    parser.add_argument('--lando', action='store_false',
+                        help='Add Lando support')
     return parser.parse_args()

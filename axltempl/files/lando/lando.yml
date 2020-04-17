@@ -1,0 +1,22 @@
+name: {name}
+recipe: drupal8
+
+services:
+  appserver:
+    type: php:7.4
+    via: nginx
+  database:
+    type: mariadb:10.4
+{services}
+tooling:
+  drush:
+    service: appserver
+    cmd: /app/vendor/bin/drush
+  drupal:
+    service: appserver
+    cmd: /app/vendor/bin/drupal
+{tooling}
+config:
+  webroot: {docroot}
+  conf:
+    php: .lando/php.ini
