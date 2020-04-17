@@ -1,5 +1,13 @@
 # Template scripts
 
+## Installation
+
+Install this script via `pip` (or `pip3`). Follow [these instructions](https://pip.pypa.io/en/stable/installing/) to install pip if you don't already have it.
+
+```bash
+pip3 install axl-template
+```
+
 ## init-drupal
 
 (*Requires Python 3.6+*)
