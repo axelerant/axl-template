@@ -4,6 +4,8 @@ import os
 import pkgutil
 import shutil
 
+from . import util
+
 
 def main():
     args = get_arguments()
@@ -13,7 +15,7 @@ def main():
             print(
                 f'The "{args.directory}" directory already exists. Please delete it before running or use the -f option.')
             return 2
-        print(f'Removing "{args.directory}" directory..."')
+        print(f'Removing "{args.directory}" directory...')
         shutil.rmtree(args.directory, True)
 
     os.mkdir(args.directory)
@@ -36,21 +38,17 @@ def generateDrupalFiles(name, description='', core='core', docroot='web', cacheS
     composer = sortComposerPackages(composer)
     with open('composer.json', 'w') as composer_file:
         json.dump(composer, composer_file, indent=4)
-    with open('.gitignore', 'w') as gitignore_file:
-        gitignore_file.write(getGitignore(docroot))
+    util.writeFile('.gitignore', getGitignore(docroot))
 
-    with open('load.environment.php', 'w') as f:
-        f.write(pkgutil.get_data(
-            __name__, "files/drupal/load.environment.php").decode())
-    with open('.env.example', 'w') as f:
-        f.write(pkgutil.get_data(__name__, "files/drupal/.env.example").decode())
+    util.copyPackageFile(
+        'files/drupal/load.environment.php', 'load.environment.php')
+    util.copyPackageFile('files/drupal/.env.example', '.env.example')
 
     os.mkdir('drush')
     os.mkdir('drush/sites')
-    with open('drush/drush.yml', 'w') as f:
-        f.write(pkgutil.get_data(__name__, "files/drupal/drush.yml").decode())
-    with open('drush/sites/self.site.yml', 'w') as f:
-        f.write(pkgutil.get_data(__name__, "files/drupal/self.site.yml").decode())
+    util.copyPackageFile('files/drupal/drush.yml', 'drush/drush.yml')
+    util.copyPackageFile('files/drupal/self.site.yml',
+                         'drush/sites/self.site.yml')
 
     pass
 
