@@ -20,5 +20,6 @@ tooling:
 {tooling}
 config:
   webroot: {docroot}
+  via: nginx
   conf:
     php: .lando/php.ini
