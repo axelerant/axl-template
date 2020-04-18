@@ -127,6 +127,6 @@ def get_arguments():
                         help='Do not run composer install')
     parser.add_argument('--cache', action='store', default='',
                         help='Add a cache service (either redis or memcache)')
-    parser.add_argument('--lando', action='store_false',
+    parser.add_argument('--lando', action='store_true',
                         help='Add Lando support')
     return parser.parse_args()
