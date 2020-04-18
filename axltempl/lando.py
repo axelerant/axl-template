@@ -46,7 +46,7 @@ def generateLandoFiles(name, docroot, cache):
     type: memcached:1
 """
 
-    yml = pkgutil.get_data(__name__, 'files/lando/lando.yml').decode()
+    yml = util.readPackageFile('files/lando/lando.yml')
     yml = yml.replace('{name}', name)
     yml = yml.replace('{docroot}', docroot)
     yml = yml.replace('{services}', services)
@@ -57,8 +57,13 @@ def generateLandoFiles(name, docroot, cache):
         os.mkdir('.lando')
     util.copyPackageFile('files/lando/php.ini', '.lando/php.ini')
 
-    util.copyPackageFile('files/lando/settings.lando.php',
-                         docroot + '/sites/default/settings.lando.php')
+    landoSettings = util.readPackageFile('files/lando/settings.lando.php')
+    if (cache == 'redis'):
+        landoSettings += util.readPackageFile('files/lando/lando.redis.php')
+    elif (cache == 'memcached'):
+        landoSettings += util.readPackageFile('files/lando/lando.memcache.php')
+    util.writeFile(
+        docroot + '/sites/default/settings.lando.php', landoSettings)
 
     settingsFile = f'{docroot}/sites/default/settings.php'
     if (not os.path.exists(settingsFile)):
