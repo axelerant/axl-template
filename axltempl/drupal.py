@@ -33,7 +33,7 @@ def main():
         name = args.name.split('/')
         name = name[1] if len(name) == 2 else name[0]
         print("Adding Lando support...")
-        lando.generateLandoFiles(args.name, args.docroot, args.cache)
+        lando.generateLandoFiles(name, args.docroot, args.cache)
 
     os.chdir('..')
     return 0
