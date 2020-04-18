@@ -4,9 +4,9 @@ import shutil
 
 
 def readFile(file):
-    with open(file, 'r') as f:
+    with open(file, "r") as f:
         return f.read()
-    return ''
+    return ""
 
 
 def readPackageFile(file):
@@ -14,7 +14,7 @@ def readPackageFile(file):
 
 
 def writeFile(file, contents):
-    with open(file, 'w') as f:
+    with open(file, "w") as f:
         f.write(contents)
 
 
