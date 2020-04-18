@@ -7,6 +7,8 @@ services:
     via: nginx
   database:
     type: mariadb:10.4
+    overrides:
+      image: bitnami/mariadb:10.4
 {services}
 tooling:
   drush:
