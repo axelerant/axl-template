@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="axl-template",  # Replace with your own username
-    version="0.1.1",
+    version="0.1.2",
     author="hussainweb",
     author_email="hussainweb@gmail.com",
     description="Scaffold a Drupal site template",
@@ -14,7 +14,7 @@ setuptools.setup(
     url="https://github.com/axelerant/axl-template",
     packages=setuptools.find_packages(),
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Build Tools",
         "Programming Language :: Python :: 3",
