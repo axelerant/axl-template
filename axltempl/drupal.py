@@ -82,9 +82,9 @@ def getComposerTemplate(name, description, core, docroot, cacheService):
     if (core == 'recommended'):
         composer['require']['drupal/core-recommended'] = '^8.8'
     if (cacheService == 'redis'):
-        composer['require']['drupal/redis'] = '^1.2'
+        composer['require']['drupal/redis'] = '^1.4'
     if (cacheService == 'memcache'):
-        composer['require']['drupal/redis'] = '^1.2'
+        composer['require']['drupal/memcache'] = '^2.0'
     return composer
 
 
