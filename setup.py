@@ -19,7 +19,7 @@ setuptools.setup(
         "Topic :: Software Development :: Build Tools",
         "Programming Language :: Python :: 3",
     ],
-    keywords='drupal',
+    keywords="drupal",
     include_package_data=True,
     entry_points={
         "console_scripts": [
@@ -27,5 +27,5 @@ setuptools.setup(
             "init-lando = axltempl.lando:main",
         ]
     },
-    python_requires='>=3.6',
+    python_requires=">=3.6",
 )
