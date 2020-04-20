@@ -1,8 +1,17 @@
 # Template scripts
 
+## Requirements
+
+You need Python 3.6+ and pip to install and use this script. Follow [these instructions](https://pip.pypa.io/en/stable/installing/) to install pip if you don't already have it.
+
+The script relies on certain developer tools to be available when running.
+
+* git - To initialise the project as a repository.
+* composer - To download the dependencies. If composer is not present, the dependencies don't get downloaded.
+
 ## Installation
 
-Install this script via `pip` (or `pip3`). Follow [these instructions](https://pip.pypa.io/en/stable/installing/) to install pip if you don't already have it.
+Install this script via `pip` (or `pip3`).
 
 ```bash
 pip3 install axl-template
