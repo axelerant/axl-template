@@ -32,7 +32,10 @@ def main():
     )
 
     if not args.no_install:
-        os.system("composer install -o")
+        if shutil.which("composer") is not None:
+            os.system("composer install -o")
+        else:
+            print("Cannot find composer. Skipping install...")
 
     if args.lando:
         from . import lando
