@@ -46,7 +46,10 @@
     "drupal-scaffold": {
       "locations": {
         "web-root": "web/"
-      }
+      },
+      "allowed-packages": [
+        "axelerant/drupal-quality-checker"
+      ]
     },
     "installer-paths": {
       "web/core": [
