@@ -1,7 +1,5 @@
-import argparse
 import json
 import os
-import pkgutil
 import shutil
 
 from . import util

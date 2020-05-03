@@ -21,6 +21,7 @@ setuptools.setup(
     ],
     keywords="drupal",
     include_package_data=True,
+    install_requires=["Click",],
     entry_points={
         "console_scripts": [
             "init-drupal = axltempl.drupal:main",

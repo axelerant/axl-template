@@ -1,49 +1,104 @@
-import argparse
 import json
 import os
 import pkgutil
 import shutil
 
+import click
+
 from . import util
 
 
-def main():
-    args = get_arguments()
+@click.command()
+@click.argument("name")
+@click.option(
+    "--directory",
+    help="Directory where the files should be set up (e.g., drupal). The directory will be emptied.",
+    type=click.Path(exists=False, file_okay=False),
+    default="drupal",
+)
+@click.option("--description", help="Description of the package", default="")
+@click.option(
+    "--core-package",
+    "-core",
+    "core_package",
+    help="Select the core package",
+    type=click.Choice(["core", "recommended"], case_sensitive=False),
+    show_default=True,
+)
+@click.option(
+    "--core",
+    "core_package",
+    help="Select the drupal/core package",
+    flag_value="core",
+    default=True,
+)
+@click.option(
+    "--recommended",
+    "core_package",
+    help="Select the drupal/core-recommended package",
+    flag_value="recommended",
+)
+@click.option(
+    "--docroot", help="The document root", type=click.Path(exists=False), default="web"
+)
+@click.option(
+    "--no-install", help="Do not run composer install", is_flag=True, default=False
+)
+@click.option(
+    "--cache",
+    help="Add a cache service",
+    type=click.Choice(["redis", "memcache"], case_sensitive=False),
+)
+@click.option("--lando", help="Add Lando support", is_flag=True)
+@click.option(
+    "--force",
+    "-f",
+    help='Force delete the target directory if it exists',
+    is_flag=True,
+)
+def main(
+    name, directory, description, core_package, docroot, no_install, cache, lando, force
+):
+    """
+    Scaffold a Drupal site template
 
-    if os.path.isdir(args.directory):
-        if not args.force:
+    Create a Drupal site template with NAME.
+    Where NAME is the name of your application package (e.g., axelerant/site)
+    """
+    if os.path.isdir(directory):
+        if not force:
             print(
-                f'The "{args.directory}" directory already exists. Please delete it before running or use the -f option.'
+                f'The "{directory}" directory already exists. Please delete it before running or use the -f option.'
             )
             return 2
-        print(f'Removing "{args.directory}" directory...')
-        shutil.rmtree(args.directory, True)
+        print(f'Removing "{directory}" directory...')
+        shutil.rmtree(directory, True)
 
-    os.mkdir(args.directory)
-    os.chdir(args.directory)
+    os.mkdir(directory)
+    os.chdir(directory)
     os.system('git init; git commit --allow-empty -m "Initial commit"')
 
     generateDrupalFiles(
-        name=args.name,
-        description=args.description,
-        core=args.core_package,
-        docroot=args.docroot,
-        cacheService=args.cache,
+        name=name,
+        description=description,
+        core=core_package,
+        docroot=docroot,
+        cacheService=cache,
     )
 
-    if not args.no_install:
+    if not no_install:
         if shutil.which("composer") is not None:
             os.system("composer install -o")
         else:
             print("Cannot find composer. Skipping install...")
 
-    if args.lando:
+    if lando:
         from . import lando
 
-        name = args.name.split("/")
+        name = name.split("/")
         name = name[1] if len(name) == 2 else name[0]
         print("Adding Lando support...")
-        lando.generateLandoFiles(name, args.docroot, args.cache)
+        lando.generateLandoFiles(name, docroot, cache)
 
     os.chdir("..")
     return 0
@@ -119,54 +174,3 @@ def getGitignore(docroot):
     gitignore = pkgutil.get_data(__name__, "files/drupal/.gitignore.template").decode()
     gitignore = gitignore.replace("{docroot}", docroot)
     return gitignore
-
-
-def get_arguments():
-    parser = argparse.ArgumentParser(description="Scaffold a Drupal site template")
-    parser.add_argument(
-        "name",
-        action="store",
-        help="Name of your application package (e.g., axelerant/site)",
-    )
-    parser.add_argument(
-        "--directory",
-        "-d",
-        action="store",
-        default="drupal",
-        help="Directory where the files should be set up (e.g., drupal). The directory will be emptied.",
-    )
-    parser.add_argument(
-        "--description",
-        "-D",
-        action="store",
-        default="",
-        help="Description of the package",
-    )
-    parser.add_argument(
-        "--core-package",
-        "-c",
-        action="store",
-        default="core",
-        choices=["core", "recommended"],
-        help="Select the core package",
-    )
-    parser.add_argument(
-        "--docroot", "-r", action="store", default="web", help="The document root"
-    )
-    parser.add_argument(
-        "--force",
-        "-f",
-        action="store_true",
-        help='Force delete the "drupal" directory if it exists',
-    )
-    parser.add_argument(
-        "--no-install", action="store_true", help="Do not run composer install"
-    )
-    parser.add_argument(
-        "--cache",
-        action="store",
-        default="",
-        help="Add a cache service (either redis or memcache)",
-    )
-    parser.add_argument("--lando", action="store_true", help="Add Lando support")
-    return parser.parse_args()

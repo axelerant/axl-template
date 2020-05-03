@@ -1,6 +1,4 @@
-import os
 import pkgutil
-import shutil
 
 
 def readFile(file):
