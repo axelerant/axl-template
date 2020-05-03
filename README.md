@@ -26,38 +26,37 @@ Scaffold a Drupal codebase in a subdirectory.
 ### Usage for init-drupal
 
 ```bash
-usage: init-drupal [-h] [--directory DIRECTORY] [--description DESCRIPTION]
-                   [--core-package {core,recommended}] [--docroot DOCROOT]
-                   [--force] [--no-install] [--cache CACHE] [--lando]
-                   name
+Usage: init-drupal [OPTIONS] NAME
 
-Scaffold a Drupal site template
+  Scaffold a Drupal site template
 
-positional arguments:
-  name                  Name of your application package (e.g.,
-                        axelerant/site)
+  Create a Drupal site template with NAME. Where NAME is the name of your
+  application package (e.g., axelerant/site)
 
-optional arguments:
-  -h, --help            show this help message and exit
-  --directory DIRECTORY, -d DIRECTORY
-                        Directory where the files should be set up (e.g.,
-                        drupal). The directory will be emptied.
-  --description DESCRIPTION, -D DESCRIPTION
-                        Description of the package
-  --core-package {core,recommended}, -c {core,recommended}
-                        Select the core package
-  --docroot DOCROOT, -r DOCROOT
-                        The document root
-  --force, -f           Force delete the "drupal" directory if it exists
-  --no-install          Do not run composer install
-  --cache CACHE         Add a cache service (either redis or memcache)
-  --lando               Add Lando support
+Options:
+  --directory DIRECTORY           Directory where the files should be set up
+                                  (e.g., drupal). The directory will be
+                                  emptied.
+
+  --description TEXT              Description of the package
+  -core, --core-package [core|recommended]
+                                  Select the core package
+  --core                          Select the drupal/core package
+  --recommended                   Select the drupal/core-recommended package
+  --docroot PATH                  The document root
+  --no-install                    Do not run composer install
+  --cache [redis|memcache]        Add a cache service
+  --lando                         Add Lando support
+  -f, --force                     Force delete the target directory if it
+                                  exists
+
+  --help                          Show this message and exit.
 ```
 
 ### Example
 
 ```bash
-init-drupal axelerant/site --cache redis --c core
+init-drupal axelerant/site --cache redis --core
 ```
 
 The above command will generate a composer.json and in a `drupal` directory and run `composer install`. It will use the regular `drupal/core` package along with the Redis module and few other packages.
