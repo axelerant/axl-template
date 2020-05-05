@@ -53,7 +53,7 @@ from . import util
 @click.option(
     "--force",
     "-f",
-    help='Force delete the target directory if it exists',
+    help="Force delete the target directory if it exists",
     is_flag=True,
 )
 def main(
