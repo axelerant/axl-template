@@ -1,3 +1,4 @@
+import click
 import pkgutil
 
 
@@ -18,3 +19,15 @@ def writeFile(file, contents):
 
 def copyPackageFile(srcFile, destFile):
     writeFile(destFile, pkgutil.get_data(__name__, srcFile).decode())
+
+
+def writeError(line):
+    click.secho(line, fg="red", err=True)
+
+
+def writeWarning(line):
+    click.secho(line, fg="yellow")
+
+
+def writeInfo(line):
+    click.secho(line, fg="green")

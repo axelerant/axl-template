@@ -67,11 +67,11 @@ def main(
     """
     if os.path.isdir(directory):
         if not force:
-            print(
+            util.writeError(
                 f'The "{directory}" directory already exists. Please delete it before running or use the -f option.'
             )
             return 2
-        print(f'Removing "{directory}" directory...')
+        util.writeWarning(f'Removing "{directory}" directory...')
         shutil.rmtree(directory, True)
 
     os.mkdir(directory)
@@ -90,14 +90,14 @@ def main(
         if shutil.which("composer") is not None:
             os.system("composer install -o")
         else:
-            print("Cannot find composer. Skipping install...")
+            util.writeWarning("Cannot find composer. Skipping install...")
 
     if lando:
         from . import lando
 
         name = name.split("/")
         name = name[1] if len(name) == 2 else name[0]
-        print("Adding Lando support...")
+        util.writeInfo("Adding Lando support...")
         lando.generateLandoFiles(name, docroot, cache)
 
     os.chdir("..")

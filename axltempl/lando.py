@@ -7,7 +7,7 @@ from . import util
 
 def main():
     if not os.path.exists("composer.json"):
-        print("Could not find composer.json in the current directory")
+        util.writeError("Could not find composer.json in the current directory")
         return 2
 
     composer = json.loads(util.readFile("composer.json"))
@@ -16,7 +16,9 @@ def main():
     docroot = composer["extra"]["drupal-scaffold"]["locations"]["web-root"].strip("/")
 
     if docroot == "":
-        print("Could not determine docroot. Make sure your composer.json is valid.")
+        util.writeError(
+            "Could not determine docroot. Make sure your composer.json is valid."
+        )
         return 3
 
     cache = ""
@@ -63,7 +65,7 @@ def generateLandoFiles(name, docroot, cache):
 
     settingsFile = f"{docroot}/sites/default/settings.php"
     if not os.path.exists(settingsFile):
-        print("Copying settings.php...")
+        util.writeInfo("Copying settings.php...")
         shutil.copyfile(f"{docroot}/sites/default/default.settings.php", settingsFile)
 
     settings = util.readFile(settingsFile)
