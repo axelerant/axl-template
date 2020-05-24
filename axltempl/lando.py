@@ -27,10 +27,11 @@ def main():
     elif "drupal/memcache" in composer["require"].keys():
         cache = "memcached"
 
-    generateLandoFiles(name, docroot, cache)
+    generateLandoFile(name, docroot, cache)
+    generateLandoDevelopmentSettingsFiles(docroot, cache)
 
 
-def generateLandoFiles(name, docroot, cache):
+def generateLandoFile(name, docroot, cache):
     services = ""
     tooling = ""
     if cache == "redis":
@@ -56,6 +57,10 @@ def generateLandoFiles(name, docroot, cache):
         os.mkdir(".lando")
     util.copyPackageFile("files/lando/php.ini", ".lando/php.ini")
 
+    return 0
+
+
+def generateLandoDevelopmentSettingsFiles(docroot, cache):
     landoSettings = util.readPackageFile("files/lando/settings.lando.php")
     if cache == "redis":
         landoSettings += util.readPackageFile("files/lando/lando.redis.php")

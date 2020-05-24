@@ -100,7 +100,15 @@ def main(
         name = name.split("/")
         name = name[1] if len(name) == 2 else name[0]
         util.writeInfo("Adding Lando support...")
-        lando.generateLandoFiles(name, docroot, cache)
+        lando.generateLandoFile(name, docroot, cache)
+
+        dir_default = f'{docroot}/sites/default'
+        if os.path.exists(dir_default):
+            # Generate lando development override configuration.
+            lando.generateLandoDevelopmentSettingsFiles(docroot, cache)
+        else:
+            util.writeWarning(
+                f'"{dir_default}" is missing. Unable to generate lando development override configuration.')
 
     os.chdir("..")
     return 0
