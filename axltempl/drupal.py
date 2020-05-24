@@ -88,7 +88,9 @@ def main(
 
     if not no_install:
         if shutil.which("composer") is not None:
-            os.system("composer install -o")
+            status = os.system("composer install -o")
+            if status != 0:
+                util.writeError('Composer is unable to resolves and install the dependencies. Skipping install...')
         else:
             util.writeWarning("Cannot find composer. Skipping install...")
 
