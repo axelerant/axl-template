@@ -28,7 +28,6 @@ def main():
         cache = "memcached"
 
     generateLandoFile(name, docroot, cache)
-    generateLandoDevelopmentSettingsFiles(docroot, cache)
 
 
 def generateLandoFile(name, docroot, cache):
@@ -57,10 +56,20 @@ def generateLandoFile(name, docroot, cache):
         os.mkdir(".lando")
     util.copyPackageFile("files/lando/php.ini", ".lando/php.ini")
 
+    # Generate lando development override configuration.
+    generateLandoDevelopmentSettingsFiles(docroot, cache)
+
     return 0
 
 
 def generateLandoDevelopmentSettingsFiles(docroot, cache):
+
+    dir_default = f"{docroot}/sites/default"
+    if not os.path.exists(dir_default):
+        util.writeError(
+            f"The \"{dir_default}\" directory is missing. Unable to generate lando override configuration files.")
+        return 0
+
     landoSettings = util.readPackageFile("files/lando/settings.lando.php")
     if cache == "redis":
         landoSettings += util.readPackageFile("files/lando/lando.redis.php")
