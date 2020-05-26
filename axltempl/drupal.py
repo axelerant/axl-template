@@ -87,11 +87,7 @@ def main(
     )
 
     if not no_install:
-        if shutil.which("composer") is not None:
-            if os.system("composer install -o") != 0:
-                util.writeError("Error when running 'composer install'. Skipping install...")
-        else:
-            util.writeWarning("Cannot find composer. Skipping install...")
+        runComposerInstall()
 
     if lando:
         from . import lando
@@ -103,6 +99,15 @@ def main(
 
     os.chdir("..")
     return 0
+
+
+def runComposerInstall():
+    if shutil.which("composer") is None:
+        util.writeWarning("Cannot find composer. Skipping install...")
+        return
+
+    if os.system("composer install -o") != 0:
+        util.writeError("Error when running 'composer install'. Skipping install...")
 
 
 def generateDrupalFiles(
