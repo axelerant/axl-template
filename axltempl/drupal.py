@@ -100,7 +100,7 @@ def main(
         name = name.split("/")
         name = name[1] if len(name) == 2 else name[0]
         util.writeInfo("Adding Lando support...")
-        lando.generateLandoFile(name, docroot, cache)
+        lando.generateLandoFiles(name, docroot, cache)
 
     os.chdir("..")
     return 0

@@ -27,10 +27,10 @@ def main():
     elif "drupal/memcache" in composer["require"].keys():
         cache = "memcached"
 
-    generateLandoFile(name, docroot, cache)
+    generateLandoFiles(name, docroot, cache)
 
 
-def generateLandoFile(name, docroot, cache):
+def generateLandoFiles(name, docroot, cache):
     services = ""
     tooling = ""
     if cache == "redis":
@@ -57,13 +57,6 @@ def generateLandoFile(name, docroot, cache):
     util.copyPackageFile("files/lando/php.ini", ".lando/php.ini")
 
     # Generate lando development override configuration.
-    generateLandoDevelopmentSettingsFiles(docroot, cache)
-
-    return 0
-
-
-def generateLandoDevelopmentSettingsFiles(docroot, cache):
-
     dir_default = f"{docroot}/sites/default"
     if not os.path.exists(dir_default):
         util.writeError(
