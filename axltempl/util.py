@@ -1,33 +1,58 @@
-import click
+"""
+Utility functions
+"""
+
 import pkgutil
+import click
 
 
-def readFile(file):
-    with open(file, "r") as f:
-        return f.read()
+def read_file(file):
+    """
+    Read entire file contents
+    """
+    with open(file, "r") as fobj:
+        return fobj.read()
     return ""
 
 
-def readPackageFile(file):
+def read_package_file(file):
+    """
+    Read entire contents of a package file
+    """
     return pkgutil.get_data(__name__, file).decode()
 
 
-def writeFile(file, contents):
-    with open(file, "w") as f:
-        f.write(contents)
+def write_file(file, contents):
+    """
+    Write contents to a file
+    """
+    with open(file, "w") as fobj:
+        fobj.write(contents)
 
 
-def copyPackageFile(srcFile, destFile):
-    writeFile(destFile, pkgutil.get_data(__name__, srcFile).decode())
+def copy_package_file(src_file, dest_file):
+    """
+    Copy package file to dest_file
+    """
+    write_file(dest_file, pkgutil.get_data(__name__, src_file).decode())
 
 
-def writeError(line):
+def write_error(line):
+    """
+    Write a single error line using click
+    """
     click.secho(line, fg="red", err=True)
 
 
-def writeWarning(line):
+def write_warning(line):
+    """
+    Write a single warning line using click
+    """
     click.secho(line, fg="yellow")
 
 
-def writeInfo(line):
+def write_info(line):
+    """
+    Write a single info line using click
+    """
     click.secho(line, fg="green")

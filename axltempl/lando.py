@@ -1,3 +1,7 @@
+"""
+Add Lando support to a Drupal codebase
+"""
+
 import json
 import os
 import shutil
@@ -6,11 +10,14 @@ from . import util
 
 
 def main():
+    """
+    Main entrypoint for init-lando
+    """
     if not os.path.exists("composer.json"):
-        util.writeError("Could not find composer.json in the current directory")
+        util.write_error("Could not find composer.json in the current directory")
         return 2
 
-    composer = json.loads(util.readFile("composer.json"))
+    composer = json.loads(util.read_file("composer.json"))
     name = composer["name"].split("/")
     name = name[1] if len(name) == 2 else name[0]
     try:
@@ -20,7 +27,7 @@ def main():
         docroot = "." if composer["name"] == "drupal/drupal" else ""
 
     if docroot == "":
-        util.writeError(
+        util.write_error(
             "Could not determine docroot. Make sure your composer.json is valid."
         )
         return 3
@@ -31,10 +38,14 @@ def main():
     elif "drupal/memcache" in composer["require"].keys():
         cache = "memcached"
 
-    generateLandoFiles(name, docroot, cache)
+    generate_lando_files(name, docroot, cache)
+    return 0
 
 
-def generateLandoFiles(name, docroot, cache):
+def generate_lando_files(name, docroot, cache):
+    """
+    Generate Lando files in the docroot
+    """
     services = ""
     tooling = ""
     if cache == "redis":
@@ -49,34 +60,34 @@ def generateLandoFiles(name, docroot, cache):
     type: memcached:1
 """
 
-    yml = util.readPackageFile("files/lando/lando.yml")
+    yml = util.read_package_file("files/lando/lando.yml")
     yml = yml.replace("{name}", name)
     yml = yml.replace("{docroot}", docroot)
     yml = yml.replace("{services}", services)
     yml = yml.replace("{tooling}", tooling)
-    util.writeFile(".lando.yml", yml)
+    util.write_file(".lando.yml", yml)
 
     if not os.path.isdir(".lando"):
         os.mkdir(".lando")
-    util.copyPackageFile("files/lando/php.ini", ".lando/php.ini")
+    util.copy_package_file("files/lando/php.ini", ".lando/php.ini")
 
-    landoSettings = util.readPackageFile("files/lando/settings.lando.php")
+    lando_settings = util.read_package_file("files/lando/settings.lando.php")
     if cache == "redis":
-        landoSettings += util.readPackageFile("files/lando/lando.redis.php")
+        lando_settings += util.read_package_file("files/lando/lando.redis.php")
     elif cache == "memcached":
-        landoSettings += util.readPackageFile("files/lando/lando.memcache.php")
-    util.writeFile(docroot + "/sites/default/settings.lando.php", landoSettings)
+        lando_settings += util.read_package_file("files/lando/lando.memcache.php")
+    util.write_file(docroot + "/sites/default/settings.lando.php", lando_settings)
 
-    settingsFile = f"{docroot}/sites/default/settings.php"
-    if not os.path.exists(settingsFile):
-        util.writeInfo("Copying settings.php...")
-        shutil.copyfile(f"{docroot}/sites/default/default.settings.php", settingsFile)
+    settings_file = f"{docroot}/sites/default/settings.php"
+    if not os.path.exists(settings_file):
+        util.write_info("Copying settings.php...")
+        shutil.copyfile(f"{docroot}/sites/default/default.settings.php", settings_file)
 
-    settings = util.readFile(settingsFile)
+    settings = util.read_file(settings_file)
     if settings.find("settings.lando.php") == -1:
         settings += """
 include $app_root . '/' . $site_path . '/settings.lando.php';
 """
-        util.writeFile(settingsFile, settings)
+        util.write_file(settings_file, settings)
 
     return 0

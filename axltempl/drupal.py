@@ -1,3 +1,7 @@
+"""
+Drupal codebase template main module
+"""
+
 import json
 import os
 import pkgutil
@@ -5,6 +9,7 @@ import shutil
 
 import click
 
+from . import lando
 from . import util
 
 
@@ -15,7 +20,8 @@ DEFAULT_CORE_VERSION = "^8.8.0"
 @click.argument("name")
 @click.option(
     "--directory",
-    help="Directory where the files should be set up (e.g., drupal). The directory will be emptied.",
+    help="Directory where the files should be set up (e.g., drupal). "
+    + "The directory will be emptied.",
     type=click.Path(exists=False, file_okay=False),
     default="drupal",
     show_default=True,
@@ -59,7 +65,7 @@ DEFAULT_CORE_VERSION = "^8.8.0"
     help="Add a cache service",
     type=click.Choice(["redis", "memcache"], case_sensitive=False),
 )
-@click.option("--lando", help="Add Lando support", is_flag=True)
+@click.option("--lando", 'add_lando', help="Add Lando support", is_flag=True)
 @click.option(
     "--force",
     "-f",
@@ -75,7 +81,7 @@ def main(
     docroot,
     no_install,
     cache,
-    lando,
+    add_lando,
     force,
 ):
     """
@@ -86,85 +92,93 @@ def main(
     """
     if os.path.isdir(directory):
         if not force:
-            util.writeError(
-                f'The "{directory}" directory already exists. Please delete it before running or use the -f option.'
+            util.write_error(
+                f'The "{directory}" directory already exists.'
+                + "Please delete it before running or use the -f option."
             )
             return 2
-        util.writeWarning(f'Removing "{directory}" directory...')
+        util.write_warning(f'Removing "{directory}" directory...')
         shutil.rmtree(directory, True)
 
     os.mkdir(directory)
     os.chdir(directory)
     os.system('git init; git commit --allow-empty -m "Initial commit"')
 
-    generateDrupalFiles(
+    generate_drupal_files(
         name=name,
         description=description,
         core=core_package,
-        coreVersion=core_version,
+        core_version=core_version,
         docroot=docroot,
-        cacheService=cache,
+        cache_service=cache,
     )
 
     if not no_install:
-        runComposerInstall()
+        run_composer_install()
     else:
-        util.writeInfo("Remember to run 'composer install' manually.")
+        util.write_info("Remember to run 'composer install' manually.")
 
-    if lando:
-        from . import lando
-
+    if add_lando:
         name = name.split("/")
         name = name[1] if len(name) == 2 else name[0]
-        util.writeInfo("Adding Lando support...")
-        lando.generateLandoFiles(name, docroot, cache)
+        util.write_info("Adding Lando support...")
+        lando.generate_lando_files(name, docroot, cache)
 
     os.chdir("..")
     return 0
 
 
-def runComposerInstall():
+def run_composer_install():
+    """
+    Run composer install and handle errors
+    """
     if shutil.which("composer") is None:
-        util.writeWarning("Cannot find composer. Skipping install...")
+        util.write_warning("Cannot find composer. Skipping install...")
         return
 
     if os.system("composer install -o") != 0:
-        util.writeError("Error when running 'composer install'. Skipping install...")
+        util.write_error("Error when running 'composer install'. Skipping install...")
 
 
-def generateDrupalFiles(
+def generate_drupal_files(
     name,
     description="",
     core="core",
-    coreVersion=DEFAULT_CORE_VERSION,
+    core_version=DEFAULT_CORE_VERSION,
     docroot="web",
-    cacheService="",
+    cache_service="",
 ):
-    composer = getComposerTemplate(
+    """
+    Generate Drupal files based on the given options
+    """
+    composer = get_composer_template(
         name=name,
         description=description,
         core=core,
-        coreVersion=coreVersion,
+        core_version=core_version,
         docroot=docroot,
-        cacheService=cacheService,
+        cache_service=cache_service,
     )
-    composer = sortComposerPackages(composer)
+    composer = sort_composer_packages(composer)
     with open("composer.json", "w") as composer_file:
         json.dump(composer, composer_file, indent=4)
-    util.writeFile(".gitignore", getGitignore(docroot))
+    util.write_file(".gitignore", get_gitignore(docroot))
 
-    util.copyPackageFile("files/drupal/load.environment.php", "load.environment.php")
-    util.copyPackageFile("files/drupal/.env.example", ".env.example")
+    util.copy_package_file("files/drupal/load.environment.php", "load.environment.php")
+    util.copy_package_file("files/drupal/.env.example", ".env.example")
 
     os.mkdir("drush")
     os.mkdir("drush/sites")
-    util.copyPackageFile("files/drupal/drush.yml", "drush/drush.yml")
-    util.copyPackageFile("files/drupal/self.site.yml", "drush/sites/self.site.yml")
-
-    pass
+    util.copy_package_file("files/drupal/drush.yml", "drush/drush.yml")
+    util.copy_package_file("files/drupal/self.site.yml", "drush/sites/self.site.yml")
 
 
-def getComposerTemplate(name, description, core, coreVersion, docroot, cacheService):
+def get_composer_template(
+    name, description, core, core_version, docroot, cache_service
+):
+    """
+    Get the composer template from package and modify it as per given options
+    """
     composer = json.loads(pkgutil.get_data(__name__, "files/drupal/composer.json"))
     composer["name"] = name
     composer["description"] = description
@@ -181,31 +195,40 @@ def getComposerTemplate(name, description, core, coreVersion, docroot, cacheServ
     }
 
     if core == "core":
-        composer["require"]["drupal/core"] = coreVersion
+        composer["require"]["drupal/core"] = core_version
     if core == "recommended":
-        composer["require"]["drupal/core-recommended"] = coreVersion
-    if cacheService == "redis":
+        composer["require"]["drupal/core-recommended"] = core_version
+    if cache_service == "redis":
         composer["require"]["drupal/redis"] = "^1.4"
-    if cacheService == "memcache":
+    if cache_service == "memcache":
         composer["require"]["drupal/memcache"] = "^2.0"
-    composer["require"]["drupal/core-composer-scaffold"] = coreVersion
+    composer["require"]["drupal/core-composer-scaffold"] = core_version
     return composer
 
 
-def sortComposerPackages(composer):
-    composer["require"] = sortDictionaryByKeys(composer["require"])
-    composer["require-dev"] = sortDictionaryByKeys(composer["require-dev"])
+def sort_composer_packages(composer):
+    """
+    Sort the packages in a composer array
+    """
+    composer["require"] = sort_dictionary_by_keys(composer["require"])
+    composer["require-dev"] = sort_dictionary_by_keys(composer["require-dev"])
     return composer
 
 
-def sortDictionaryByKeys(dict):
-    sortedDict = {}
-    for key in sorted(dict.keys()):
-        sortedDict[key] = dict[key]
-    return sortedDict
+def sort_dictionary_by_keys(input_dict):
+    """
+    Sort the dictionary by keys in alphabetical order
+    """
+    sorted_dict = {}
+    for key in sorted(input_dict.keys()):
+        sorted_dict[key] = input_dict[key]
+    return sorted_dict
 
 
-def getGitignore(docroot):
+def get_gitignore(docroot):
+    """
+    Get gitignore template from the package
+    """
     gitignore = pkgutil.get_data(__name__, "files/drupal/.gitignore.template").decode()
     gitignore = gitignore.replace("{docroot}", docroot)
     return gitignore
