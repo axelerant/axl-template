@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="axl-template",  # Replace with your own username
-    version="0.1.5",
+    version="0.2.0",
     author="hussainweb",
     author_email="hussainweb@gmail.com",
     description="Scaffold a Drupal site template",
@@ -26,6 +26,7 @@ setuptools.setup(
         "console_scripts": [
             "init-drupal = axltempl.drupal:main",
             "init-lando = axltempl.lando:main",
+            "init-renovate = gitlabrenovate.main:scaffold",
         ]
     },
     python_requires=">=3.6",

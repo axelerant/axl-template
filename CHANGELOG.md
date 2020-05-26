@@ -1,4 +1,20 @@
 
+0.2.0 / 2020-05-26
+==================
+
+* Fixed "init-lando" FileNotFoundError (#6)
+* Add requirements.txt
+* Add default pylintrc generated using 'pylint --generate-rcfile'
+* Better handle webroot detection for drupal/drupal
+* Allow specifying Drupal core version
+* Remind to run composer install if installation is skipped.
+* Refactor composer install method
+* Added check to exit if composer fails to install vendors. (#5)
+* Convert print calls to click's utilities
+* Update README with new options documentation
+* Refactor argument parsing using click
+* fix markdown lint issues
+
 0.1.5 / 2020-04-21
 ==================
 
