@@ -8,6 +8,9 @@ import click
 from . import util
 
 
+DEFAULT_CORE_VERSION = "^8.8.0"
+
+
 @click.command()
 @click.argument("name")
 @click.option(
@@ -15,6 +18,7 @@ from . import util
     help="Directory where the files should be set up (e.g., drupal). The directory will be emptied.",
     type=click.Path(exists=False, file_okay=False),
     default="drupal",
+    show_default=True,
 )
 @click.option("--description", help="Description of the package", default="")
 @click.option(
@@ -39,6 +43,12 @@ from . import util
     flag_value="recommended",
 )
 @click.option(
+    "--core-version",
+    help="Drupal core version",
+    default=DEFAULT_CORE_VERSION,
+    show_default=True,
+)
+@click.option(
     "--docroot", help="The document root", type=click.Path(exists=False), default="web"
 )
 @click.option(
@@ -57,7 +67,16 @@ from . import util
     is_flag=True,
 )
 def main(
-    name, directory, description, core_package, docroot, no_install, cache, lando, force
+    name,
+    directory,
+    description,
+    core_package,
+    core_version,
+    docroot,
+    no_install,
+    cache,
+    lando,
+    force,
 ):
     """
     Scaffold a Drupal site template
@@ -82,6 +101,7 @@ def main(
         name=name,
         description=description,
         core=core_package,
+        coreVersion=core_version,
         docroot=docroot,
         cacheService=cache,
     )
@@ -113,12 +133,18 @@ def runComposerInstall():
 
 
 def generateDrupalFiles(
-    name, description="", core="core", docroot="web", cacheService=""
+    name,
+    description="",
+    core="core",
+    coreVersion=DEFAULT_CORE_VERSION,
+    docroot="web",
+    cacheService="",
 ):
     composer = getComposerTemplate(
         name=name,
         description=description,
         core=core,
+        coreVersion=coreVersion,
         docroot=docroot,
         cacheService=cacheService,
     )
@@ -138,7 +164,7 @@ def generateDrupalFiles(
     pass
 
 
-def getComposerTemplate(name, description, core, docroot, cacheService):
+def getComposerTemplate(name, description, core, coreVersion, docroot, cacheService):
     composer = json.loads(pkgutil.get_data(__name__, "files/drupal/composer.json"))
     composer["name"] = name
     composer["description"] = description
@@ -155,13 +181,14 @@ def getComposerTemplate(name, description, core, docroot, cacheService):
     }
 
     if core == "core":
-        composer["require"]["drupal/core"] = "^8.8"
+        composer["require"]["drupal/core"] = coreVersion
     if core == "recommended":
-        composer["require"]["drupal/core-recommended"] = "^8.8"
+        composer["require"]["drupal/core-recommended"] = coreVersion
     if cacheService == "redis":
         composer["require"]["drupal/redis"] = "^1.4"
     if cacheService == "memcache":
         composer["require"]["drupal/memcache"] = "^2.0"
+    composer["require"]["drupal/core-composer-scaffold"] = coreVersion
     return composer
 
 

@@ -36,13 +36,14 @@ Usage: init-drupal [OPTIONS] NAME
 Options:
   --directory DIRECTORY           Directory where the files should be set up
                                   (e.g., drupal). The directory will be
-                                  emptied.
+                                  emptied.  [default: drupal]
 
   --description TEXT              Description of the package
   -core, --core-package [core|recommended]
                                   Select the core package
   --core                          Select the drupal/core package
   --recommended                   Select the drupal/core-recommended package
+  --core-version TEXT             Drupal core version  [default: ^8.8.0]
   --docroot PATH                  The document root
   --no-install                    Do not run composer install
   --cache [redis|memcache]        Add a cache service
