@@ -65,7 +65,7 @@ DEFAULT_CORE_VERSION = "^8.8.0"
     help="Add a cache service",
     type=click.Choice(["redis", "memcache"], case_sensitive=False),
 )
-@click.option("--lando", 'add_lando', help="Add Lando support", is_flag=True)
+@click.option("--lando", "add_lando", help="Add Lando support", is_flag=True)
 @click.option(
     "--force",
     "-f",
