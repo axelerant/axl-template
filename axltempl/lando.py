@@ -13,7 +13,11 @@ def main():
     composer = json.loads(util.readFile("composer.json"))
     name = composer["name"].split("/")
     name = name[1] if len(name) == 2 else name[0]
-    docroot = composer["extra"]["drupal-scaffold"]["locations"]["web-root"].strip("/")
+    try:
+        scaffold_opts = composer["extra"]["drupal-scaffold"]
+        docroot = scaffold_opts["locations"]["web-root"].strip("/")
+    except KeyError:
+        docroot = "." if composer["name"] == "drupal/drupal" else ""
 
     if docroot == "":
         util.writeError(
