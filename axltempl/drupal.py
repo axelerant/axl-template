@@ -88,6 +88,8 @@ def main(
 
     if not no_install:
         runComposerInstall()
+    else:
+        util.writeInfo("Remember to run 'composer install' manually.")
 
     if lando:
         from . import lando
