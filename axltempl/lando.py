@@ -71,6 +71,13 @@ def generate_lando_files(name, docroot, cache):
         os.mkdir(".lando")
     util.copy_package_file("files/lando/php.ini", ".lando/php.ini")
 
+    # Generate lando development override configuration.
+    dir_default = f"{docroot}/sites/default"
+    if not os.path.exists(dir_default):
+        util.writeError(
+            f"The \"{dir_default}\" directory is missing. Unable to generate lando override configuration files.")
+        return 0
+
     lando_settings = util.read_package_file("files/lando/settings.lando.php")
     if cache == "redis":
         lando_settings += util.read_package_file("files/lando/lando.redis.php")
