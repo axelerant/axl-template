@@ -75,10 +75,15 @@ def generate_lando_files(name, docroot, cache):
     dir_default = f"{docroot}/sites/default"
     if not os.path.exists(dir_default):
         util.write_error(
-            f'The "{dir_default}" directory is missing.'
+            f'The "{dir_default}" directory is missing. '
             + "Unable to generate lando override configuration files."
         )
-        return 0
+        util.write_info(
+            "This is probably due to composer installation failure "
+            + "(or you specified --no-install). "
+            + "Run init-lando after running composer install."
+        )
+        return 2
 
     lando_settings = util.read_package_file("files/lando/settings.lando.php")
     if cache == "redis":
