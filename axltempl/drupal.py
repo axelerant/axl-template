@@ -88,7 +88,8 @@ def main(
 
     if not no_install:
         if shutil.which("composer") is not None:
-            os.system("composer install -o")
+            if os.system("composer install -o") != 0:
+                util.writeError("Error when running 'composer install'. Skipping install...")
         else:
             util.writeWarning("Cannot find composer. Skipping install...")
 
