@@ -1,4 +1,10 @@
 
+0.2.1 / 2020-06-04
+==================
+
+* Merge pull request #10 from axelerant/drupal-console
+* Fixes #9: Remove drupal/console from composer.json
+
 0.2.0 / 2020-05-26
 ==================
 
