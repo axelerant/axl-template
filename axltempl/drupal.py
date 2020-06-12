@@ -13,7 +13,7 @@ from . import lando
 from . import util
 
 
-DEFAULT_CORE_VERSION = "^8.8.0"
+DEFAULT_CORE_VERSION = "^8.9.0"
 
 
 @click.command()
