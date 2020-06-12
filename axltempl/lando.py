@@ -50,6 +50,7 @@ def generate_lando_files(name, docroot, cache):
     tooling = ""
     if cache == "redis":
         services = """  cache:
+    app_mount: disabled
     type: redis:5
 """
         tooling = """  redis-cli:
@@ -57,6 +58,7 @@ def generate_lando_files(name, docroot, cache):
 """
     elif cache == "memcached":
         services = """  cache:
+    app_mount: disabled
     type: memcached:1
 """
 
