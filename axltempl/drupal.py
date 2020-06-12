@@ -118,6 +118,8 @@ def main(
     else:
         util.write_info("Remember to run 'composer install' manually.")
 
+    write_settings_env(docroot)
+
     if add_lando:
         name = name.split("/")
         name = name[1] if len(name) == 2 else name[0]
@@ -232,3 +234,51 @@ def get_gitignore(docroot):
     gitignore = pkgutil.get_data(__name__, "files/drupal/.gitignore.template").decode()
     gitignore = gitignore.replace("{docroot}", docroot)
     return gitignore
+
+
+def ensure_settings_file(docroot):
+    """
+    Make sure the settings.php file exists
+    """
+    settings_path = f"{docroot}/sites/default"
+    settings_file = f"{settings_path}/settings.php"
+    if not os.path.exists(settings_path):
+        os.makedirs(settings_path, exist_ok=True)
+
+    settings_source = f"{docroot}/sites/default/default.settings.php"
+    if not os.path.exists(settings_source):
+        return False
+
+    if not os.path.exists(settings_file):
+        util.write_info("Copying settings.php...")
+        shutil.copyfile(settings_source, settings_file)
+    return settings_file
+
+
+def write_settings_env(docroot):
+    """
+    Write settings.env.php file in correct location
+    """
+    settings_file = ensure_settings_file(docroot)
+    util.copy_package_file(
+        "files/drupal/settings.env.php", docroot + "/sites/default/settings.env.php"
+    )
+    modify_settings_file(
+        settings_file, "include $app_root . '/' . $site_path . '/settings.env.php';"
+    )
+
+
+def modify_settings_file(settings_file, line):
+    """
+    Add a line to the settings.php file if present, else show a warning
+    """
+    if settings_file and os.path.exists(settings_file):
+        settings = util.read_file(settings_file)
+        if settings.find(line) == -1:
+            settings += "\n" + line + "\n"
+            util.write_file(settings_file, settings)
+    else:
+        util.write_warning(
+            "Could not write to settings.php. Remember to add this line after installation."
+        )
+        util.write_warning(line)

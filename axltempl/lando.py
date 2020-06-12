@@ -4,9 +4,9 @@ Add Lando support to a Drupal codebase
 
 import json
 import os
-import shutil
 
 from . import util
+from . import drupal
 
 
 def main():
@@ -92,16 +92,9 @@ def generate_lando_files(name, docroot, cache):
         lando_settings += util.read_package_file("files/lando/lando.memcache.php")
     util.write_file(docroot + "/sites/default/settings.lando.php", lando_settings)
 
-    settings_file = f"{docroot}/sites/default/settings.php"
-    if not os.path.exists(settings_file):
-        util.write_info("Copying settings.php...")
-        shutil.copyfile(f"{docroot}/sites/default/default.settings.php", settings_file)
-
-    settings = util.read_file(settings_file)
-    if settings.find("settings.lando.php") == -1:
-        settings += """
-include $app_root . '/' . $site_path . '/settings.lando.php';
-"""
-        util.write_file(settings_file, settings)
+    settings_file = drupal.ensure_settings_file(docroot)
+    drupal.modify_settings_file(
+        settings_file, "include $app_root . '/' . $site_path . '/settings.lando.php';"
+    )
 
     return 0
