@@ -56,3 +56,10 @@ def write_info(line):
     Write a single info line using click
     """
     click.secho(line, fg="green")
+
+
+def write_important(line, prefix="[IMPORTANT] "):
+    """
+    Write a single info line with important prefix
+    """
+    click.secho(prefix + line, fg="green", bold=True)
