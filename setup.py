@@ -21,12 +21,13 @@ setuptools.setup(
     ],
     keywords="drupal",
     include_package_data=True,
-    install_requires=["Click",],
+    install_requires=["Click", "requests",],
     entry_points={
         "console_scripts": [
             "init-drupal = axltempl.drupal:main",
             "init-lando = axltempl.lando:main",
             "init-gitlab = axltempl.gitlab:main",
+            "init-renovate = axltempl.renovate:main",
         ]
     },
     python_requires=">=3.6",

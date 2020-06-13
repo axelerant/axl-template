@@ -1,0 +1,9 @@
+renovate:
+  image:
+    name: renovate/renovate
+    entrypoint: [""]
+  stage: renovate
+  only:
+    - schedule
+  script:
+    - "node /usr/src/app/dist/renovate.js"

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "gitAuthor": "Renovate <renovate@axelerant.com>",
+  "packageRules": [
+    {
+      "managers": ["composer"],
+      "packagePatterns": ["^drupal/"],
+      "updateTypes": ["patch", "minor"],
+      "groupName": "Drupal modules (non-major)"
+    },
+    {
+      "packagePatterns": ["^drupal/core"],
+      "updateTypes": ["patch", "minor"],
+      "groupName": "Drupal core (non-major)"
+    },
+    {
+      "depTypeList": ["devDependencies", "require-dev"],
+      "updateTypes": ["patch", "minor"],
+      "groupName": "devDependencies (non-major)"
+    },
+    {
+      "managers": ["composer"],
+      "rangeStrategy": "bump",
+      "labels": ["renovate", "composer"]
+    },
+    {
+      "depTypeList": ["require-dev"],
+      "branchPrefix": "renovate/no-review/"
+    },
+    {
+      "managers": ["npm"],
+      "labels": ["renovate", "npm"],
+      "branchPrefix": "renovate/no-review/"
+    }
+  ]
+}
