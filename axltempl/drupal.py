@@ -9,6 +9,7 @@ import shutil
 
 import click
 
+from . import gitlab
 from . import lando
 from . import util
 
@@ -66,6 +67,7 @@ DEFAULT_CORE_VERSION = "^8.9.0"
     type=click.Choice(["redis", "memcache"], case_sensitive=False),
 )
 @click.option("--lando", "add_lando", help="Add Lando support", is_flag=True)
+@click.option("--gitlab", "add_gitlab", help="Add GitLab support", is_flag=True)
 @click.option(
     "--force",
     "-f",
@@ -82,6 +84,7 @@ def main(
     no_install,
     cache,
     add_lando,
+    add_gitlab,
     force,
 ):
     """
@@ -126,6 +129,10 @@ def main(
         util.write_info("Adding Lando support...")
         lando.generate_lando_files(name, docroot, cache)
 
+    if add_gitlab:
+        util.write_info("Adding GitLab support...")
+        gitlab.generate_gitlab_files(docroot)
+
     os.chdir("..")
     return 0
 
@@ -169,8 +176,7 @@ def generate_drupal_files(
     util.copy_package_file("files/drupal/load.environment.php", "load.environment.php")
     util.copy_package_file("files/drupal/.env.example", ".env.example")
 
-    os.mkdir("drush")
-    os.mkdir("drush/sites")
+    os.makedirs("drush/sites", mode=0o755, exist_ok=True)
     util.copy_package_file("files/drupal/drush.yml", "drush/drush.yml")
     util.copy_package_file("files/drupal/self.site.yml", "drush/sites/self.site.yml")
 

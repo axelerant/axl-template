@@ -26,7 +26,7 @@ setuptools.setup(
         "console_scripts": [
             "init-drupal = axltempl.drupal:main",
             "init-lando = axltempl.lando:main",
-            "init-renovate = gitlabrenovate.main:scaffold",
+            "init-gitlab = axltempl.gitlab:main",
         ]
     },
     python_requires=">=3.6",
