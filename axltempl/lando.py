@@ -69,8 +69,7 @@ def generate_lando_files(name, docroot, cache):
     yml = yml.replace("{tooling}", tooling)
     util.write_file(".lando.yml", yml)
 
-    if not os.path.isdir(".lando"):
-        os.mkdir(".lando")
+    os.makedirs(".lando", mode=0o755, exist_ok=True)
     util.copy_package_file("files/lando/php.ini", ".lando/php.ini")
 
     # Generate lando development override configuration.
@@ -97,6 +96,11 @@ def generate_lando_files(name, docroot, cache):
     settings_file = drupal.ensure_settings_file(docroot)
     drupal.modify_settings_file(
         settings_file, "include $app_root . '/' . $site_path . '/settings.lando.php';"
+    )
+
+    util.write_info("Successfully created Lando configuration files.")
+    util.write_important(
+        "Change the database image from mariadb to your desired image in .lando.yml."
     )
 
     return 0
