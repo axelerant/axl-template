@@ -18,6 +18,9 @@ tooling:
   drupal:
     service: appserver
     cmd: /app/vendor/bin/drupal
+  phpunit:
+    service: appserver
+    cmd: /app/vendor/bin/phpunit
 {tooling}
 config:
   webroot: {docroot}
