@@ -1,4 +1,14 @@
 
+0.3.0 / 2020-06-12
+==================
+
+* Add GitLab CI support
+* Add more helpful messages to lando.py
+* Add a new helper method to write bold messages
+* Disable mounts for services that don't need it
+* Add support to write settings.env.php
+* Set default core version to 8.9.0
+
 0.2.1 / 2020-06-04
 ==================
 
