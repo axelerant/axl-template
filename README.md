@@ -43,11 +43,12 @@ Options:
                                   Select the core package
   --core                          Select the drupal/core package
   --recommended                   Select the drupal/core-recommended package
-  --core-version TEXT             Drupal core version  [default: ^8.8.0]
+  --core-version TEXT             Drupal core version  [default: ^8.9.0]
   --docroot PATH                  The document root
   --no-install                    Do not run composer install
   --cache [redis|memcache]        Add a cache service
   --lando                         Add Lando support
+  --gitlab                        Add GitLab support
   -f, --force                     Force delete the target directory if it
                                   exists
 
@@ -77,3 +78,21 @@ usage: init-lando
 No options are required. The tool reads the composer.json file and sets up the Lando configuration accordingly. It also sets up a `settings.lando.php` file to include Lando specific database and caching configuration.
 
 Lando support can also be added when running `init-drupal` by passing the `--lando` argument.
+
+## init-gitlab
+
+(*Requires Python 3.6+*)
+
+Scaffold GitLab configuration for a Drupal site in the current directory.
+
+### Usage for init-gitlab
+
+```bash
+usage: init-gitlab
+```
+
+No options are required. The tool reads the composer.json file and sets up the GitLab CI configuration accordingly. It also enables loading `settings.local.php` from `settings.php` so that Drupal can use proper database configuration during a CI run.
+
+These files are created by `init-gitlab` in the `.gitlab` directory and copied by a shell script (`ci.sh`). The `.gitlab-ci.yml` file is created in the project root directly.
+
+GitLab support can also be added when running `init-drupal` by passing the `--gitlab` option.
