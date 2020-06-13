@@ -11,10 +11,10 @@ The script relies on certain developer tools to be available when running.
 
 ## Installation
 
-Install this script via `pip` (or `pip3`).
+Install this script via `pip` (or `pip3`). You can use the command to upgrade the command as well.
 
 ```bash
-pip3 install axl-template
+pip3 install --upgrade axl-template
 ```
 
 ## init-drupal
@@ -77,7 +77,7 @@ usage: init-lando
 
 No options are required. The tool reads the composer.json file and sets up the Lando configuration accordingly. It also sets up a `settings.lando.php` file to include Lando specific database and caching configuration.
 
-Lando support can also be added when running `init-drupal` by passing the `--lando` argument.
+Lando support can also be added when running `init-drupal` by passing the `--lando` option.
 
 ## init-gitlab
 
