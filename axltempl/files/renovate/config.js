@@ -9,4 +9,5 @@ module.exports = {
   extends: ["config:base"],
   gitAuthor: "Renovate <renovate@axelerant.com>",
   logLevel: "debug",
+  onboarding: false
 };
