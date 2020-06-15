@@ -142,8 +142,9 @@ def ensure_memory_limit():
     Make sure we have enough memory for composer to work.
     """
     if shutil.which("php") is None:
-        util.write_warning("Cannot find php. Skipping memory check...")
-        return
+        util.write_error("Cannot find php.")
+        util.write_error("Run with --no-install flag if you don't need composer.")
+        sys.exit(3)
 
     mem_limit = os.getenv("COMPOSER_MEMORY_LIMIT")
     if mem_limit == "-1":
@@ -206,11 +207,19 @@ def run_composer_install():
     Run composer install and handle errors
     """
     if shutil.which("composer") is None:
-        util.write_warning("Cannot find composer. Skipping install...")
-        return
+        util.write_error("Cannot find composer. Aborting...")
+        sys.exit(4)
 
-    if os.system("composer install -o") != 0:
-        util.write_error("Error when running 'composer install'. Skipping install...")
+    composer_run = subprocess.run("composer install -o", shell=True, check=False)
+    if composer_run.returncode != 0:
+        util.write_error("Error when running 'composer install'. Aborting...")
+        util.write_error("Make sure you have set an adequate PHP memory limit.")
+        util.write_warning(
+            "Read {} for more details".format(
+                "https://getcomposer.org/doc/articles/troubleshooting.md#memory-limit-errors"
+            )
+        )
+        sys.exit(4)
 
 
 def generate_drupal_files(
