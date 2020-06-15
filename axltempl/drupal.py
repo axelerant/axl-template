@@ -101,7 +101,12 @@ def main(
             )
             return 2
         util.write_warning(f'Removing "{directory}" directory...')
-        shutil.rmtree(directory, True)
+        try:
+            shutil.rmtree(directory)
+        except OSError as err:
+            util.write_error(f'Failed deleting the "{directory}" directory')
+            util.write_error(str(err))
+            return 2
 
     os.mkdir(directory)
     os.chdir(directory)
