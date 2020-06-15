@@ -188,6 +188,8 @@ def generate_drupal_files(
     os.makedirs("config/sync", mode=0o755, exist_ok=True)
     util.write_file("config/sync/.gitkeep", "")
 
+    util.copy_package_file("files/drupal/renovate.json", "renovate.json")
+
 
 def get_composer_template(
     name, description, core, core_version, docroot, cache_service
