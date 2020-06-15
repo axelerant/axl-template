@@ -94,22 +94,7 @@ def main(
     Create a Drupal site template with NAME.
     Where NAME is the name of your application package (e.g., axelerant/site)
     """
-    if os.path.isdir(directory):
-        if not force:
-            util.write_error(
-                f'The "{directory}" directory already exists.'
-                + "Please delete it before running or use the -f option."
-            )
-            sys.exit(2)
-        util.write_warning(f'Removing "{directory}" directory...')
-        try:
-            shutil.rmtree(directory)
-        except OSError as err:
-            util.write_error(f'Failed deleting the "{directory}" directory')
-            util.write_error(str(err))
-            sys.exit(2)
-
-    os.mkdir(directory)
+    prepare_base_directory(directory, force)
     os.chdir(directory)
     os.system('git init; git commit --allow-empty -m "Initial commit"')
 
@@ -146,6 +131,29 @@ def main(
 
     os.chdir("..")
     return 0
+
+
+def prepare_base_directory(directory, force):
+    """
+    Create the base directory while deleting it if forced.
+    We need the directory to be empty.
+    """
+    if os.path.isdir(directory):
+        if not force:
+            util.write_error(
+                f'The "{directory}" directory already exists.'
+                + "Please delete it before running or use the -f option."
+            )
+            sys.exit(2)
+        util.write_warning(f'Removing "{directory}" directory...')
+        try:
+            shutil.rmtree(directory)
+        except OSError as err:
+            util.write_error(f'Failed deleting the "{directory}" directory')
+            util.write_error(str(err))
+            sys.exit(2)
+
+    os.mkdir(directory)
 
 
 def run_composer_install():
