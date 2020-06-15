@@ -1,4 +1,18 @@
 
+0.4.0 / 2020-06-15
+==================
+
+* Exit instead of just warning if PHP or composer are not present
+* Check and report if memory limit is not -1 (unlimited)
+* Make sure we send a return code when the command fails
+* Better handle errors when deleting an existing directory
+* Generate renovate.json along with Drupal files
+* Write config_sync_directory settings
+* Minor changes in README for completeness
+* Add README for init-gitlab
+* Add VSCode workspace settings
+* Add phpunit tooling for lando
+
 0.3.0 / 2020-06-12
 ==================
 
