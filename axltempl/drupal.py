@@ -121,6 +121,11 @@ def main(
     else:
         util.write_info("Remember to run 'composer install' manually.")
 
+    settings_file = ensure_settings_file(docroot)
+    modify_settings_file(
+        settings_file, "$settings['config_sync_directory'] = '../config/sync';",
+    )
+
     write_settings_env(docroot)
 
     if add_lando:
@@ -179,6 +184,9 @@ def generate_drupal_files(
     os.makedirs("drush/sites", mode=0o755, exist_ok=True)
     util.copy_package_file("files/drupal/drush.yml", "drush/drush.yml")
     util.copy_package_file("files/drupal/self.site.yml", "drush/sites/self.site.yml")
+
+    os.makedirs("config/sync", mode=0o755, exist_ok=True)
+    util.write_file("config/sync/.gitkeep", "")
 
 
 def get_composer_template(
