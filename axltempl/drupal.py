@@ -6,6 +6,7 @@ import json
 import os
 import pkgutil
 import shutil
+import sys
 
 import click
 
@@ -99,14 +100,14 @@ def main(
                 f'The "{directory}" directory already exists.'
                 + "Please delete it before running or use the -f option."
             )
-            return 2
+            sys.exit(2)
         util.write_warning(f'Removing "{directory}" directory...')
         try:
             shutil.rmtree(directory)
         except OSError as err:
             util.write_error(f'Failed deleting the "{directory}" directory')
             util.write_error(str(err))
-            return 2
+            sys.exit(2)
 
     os.mkdir(directory)
     os.chdir(directory)
