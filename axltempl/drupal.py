@@ -6,6 +6,7 @@ import json
 import os
 import pkgutil
 import shutil
+import subprocess
 import sys
 
 import click
@@ -94,6 +95,9 @@ def main(
     Create a Drupal site template with NAME.
     Where NAME is the name of your application package (e.g., axelerant/site)
     """
+    if not no_install:
+        ensure_memory_limit()
+
     prepare_base_directory(directory, force)
     os.chdir(directory)
     os.system('git init; git commit --allow-empty -m "Initial commit"')
@@ -131,6 +135,47 @@ def main(
 
     os.chdir("..")
     return 0
+
+
+def ensure_memory_limit():
+    """
+    Make sure we have enough memory for composer to work.
+    """
+    if shutil.which("php") is None:
+        util.write_warning("Cannot find php. Skipping memory check...")
+        return
+
+    mem_limit = os.getenv("COMPOSER_MEMORY_LIMIT")
+    if mem_limit == "-1":
+        return
+
+    php_mem_limit = subprocess.check_output(
+        ["php", "-r", "echo ini_get('memory_limit');"]
+    ).decode("utf-8")
+    if php_mem_limit == "-1":
+        return
+
+    util.write_error(
+        "Composer typically requires a lot of memory, especially with Drupal"
+    )
+    util.write_error(f"Current PHP value configured: {php_mem_limit}")
+    util.write_error(f"Current composer value configured: {mem_limit}")
+    util.write_error(
+        "Consider setting the limit to -1 with either of the below methods"
+    )
+    util.write_error("- PHP settings - memory_limit option")
+    util.write_error("- COMPOSER_MEMORY_LIMIT environment variable")
+    util.write_warning(
+        "Read {} for more details".format(
+            "https://getcomposer.org/doc/articles/troubleshooting.md#memory-limit-errors"
+        )
+    )
+    should_continue = click.prompt(
+        "Do you want to continue anyway?", "yes", show_default=True
+    )
+    if should_continue == "yes":
+        return
+    sys.exit(3)
 
 
 def prepare_base_directory(directory, force):
