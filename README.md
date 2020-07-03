@@ -1,5 +1,7 @@
 # Template scripts
 
+A set of scaffolding tools for use at Axelerant.
+
 ## Requirements
 
 You need Python 3.6+ and pip to install and use this script. Follow [these instructions](https://pip.pypa.io/en/stable/installing/) to install pip if you don't already have it.
