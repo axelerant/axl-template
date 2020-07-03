@@ -1,6 +1,10 @@
 # Template scripts
 
-A set of scaffolding tools for use at Axelerant.
+A set of scaffolding tools for use at Axelerant. Currently it supports:
+
+- [Drupal](#init-drupal)
+- [Lando](#init-lando)
+- [GitLab](#init-gitlab)
 
 ## Requirements
 
