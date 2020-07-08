@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="axl-template",  # Replace with your own username
-    version="0.4.0",
+    version="0.4.1",
     author="hussainweb",
     author_email="hussainweb@gmail.com",
     description="Scaffold a Drupal site template",

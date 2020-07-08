@@ -1,4 +1,14 @@
 
+0.4.1 / 2020-07-08
+==================
+
+* Change branch name in our GitHub actions
+* Change Renovate rules to split Drupal and npm dev dependencies
+* Add phplint to GitLab CI template
+* Add composer validate to GitLab CI template
+* Update to phpdotenv 5.0
+* Add purpose in README (#12)
+
 0.4.0 / 2020-06-15
 ==================
 
