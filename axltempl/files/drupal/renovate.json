@@ -19,9 +19,14 @@
       "groupName": "Drupal core (major)"
     },
     {
-      "depTypeList": ["devDependencies", "require-dev"],
+      "depTypeList": ["devDependencies"],
       "updateTypes": ["patch", "minor"],
       "groupName": "devDependencies (non-major)"
+    },
+    {
+      "depTypeList": ["require-dev"],
+      "updateTypes": ["patch", "minor"],
+      "groupName": "require-dev (non-major)"
     },
     {
       "managers": ["composer"],
