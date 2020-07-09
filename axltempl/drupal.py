@@ -116,6 +116,11 @@ def main(
         cache_service=cache,
     )
 
+    if not no_install:
+        run_composer_install()
+    else:
+        util.write_info("Remember to run 'composer install' manually.")
+
     settings_file = ensure_settings_file(docroot)
     modify_settings_file(
         settings_file, "$settings['config_sync_directory'] = '../config/sync';",
@@ -132,11 +137,6 @@ def main(
     if add_gitlab:
         util.write_info("Adding GitLab support...")
         gitlab.generate_gitlab_files(docroot)
-
-    if not no_install:
-        run_composer_install()
-    else:
-        util.write_info("Remember to run 'composer install' manually.")
 
     os.chdir("..")
     return 0
@@ -354,12 +354,6 @@ def write_settings_env(docroot):
     )
     modify_settings_file(
         settings_file, "include $app_root . '/' . $site_path . '/settings.env.php';"
-    )
-    util.copy_package_file(
-        "files/lando/settings.lando.php", docroot + "/sites/default/settings.lando.php"
-    )
-    modify_settings_file(
-        settings_file, "include $app_root . '/' . $site_path . '/settings.lando.php';"
     )
 
 
