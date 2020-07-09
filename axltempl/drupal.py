@@ -95,6 +95,11 @@ def main(
     Create a Drupal site template with NAME.
     Where NAME is the name of your application package (e.g., axelerant/site)
     """
+    if "/" not in name:
+        util.write_error(
+            "The name argument should consist of vendor name and project name, separated by /."
+        )
+
     if not no_install:
         ensure_memory_limit()
 
@@ -110,11 +115,6 @@ def main(
         docroot=docroot,
         cache_service=cache,
     )
-
-    if not no_install:
-        run_composer_install()
-    else:
-        util.write_info("Remember to run 'composer install' manually.")
 
     settings_file = ensure_settings_file(docroot)
     modify_settings_file(
@@ -132,6 +132,11 @@ def main(
     if add_gitlab:
         util.write_info("Adding GitLab support...")
         gitlab.generate_gitlab_files(docroot)
+
+    if not no_install:
+        run_composer_install()
+    else:
+        util.write_info("Remember to run 'composer install' manually.")
 
     os.chdir("..")
     return 0
@@ -349,6 +354,12 @@ def write_settings_env(docroot):
     )
     modify_settings_file(
         settings_file, "include $app_root . '/' . $site_path . '/settings.env.php';"
+    )
+    util.copy_package_file(
+        "files/lando/settings.lando.php", docroot + "/sites/default/settings.lando.php"
+    )
+    modify_settings_file(
+        settings_file, "include $app_root . '/' . $site_path . '/settings.lando.php';"
     )
 
 
