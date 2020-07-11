@@ -5,6 +5,8 @@ services:
   appserver:
     type: php:7.4
     via: nginx
+    config:
+      php: .lando/php.ini
   database:
     type: mariadb:10.4
     app_mount: disabled
@@ -25,5 +27,3 @@ tooling:
 config:
   webroot: {docroot}
   via: nginx
-  conf:
-    php: .lando/php.ini
