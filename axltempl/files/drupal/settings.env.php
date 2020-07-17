@@ -1,5 +1,6 @@
 <?php
 
+// @codingStandardsIgnoreFile
 if (!getenv('MYSQL_DATABASE')) {
   return;
 }
