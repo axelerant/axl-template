@@ -1,6 +1,10 @@
 <?php
 
-// @codingStandardsIgnoreFile
+/**
+ * @file
+ * Load settings from environment variables.
+ * @see /.env.example
+ */
 if (!getenv('MYSQL_DATABASE')) {
   return;
 }
