@@ -259,6 +259,9 @@ def generate_drupal_files(
     os.makedirs(docroot + "/modules/custom", mode=0o755, exist_ok=True)
     util.write_file(docroot + "/modules/custom/.gitkeep", "")
 
+    os.makedirs(docroot + "/themes/custom", mode=0o755, exist_ok=True)
+    util.write_file(docroot + "/themes/custom/.gitkeep", "")
+
     util.copy_package_file("files/drupal/renovate.json", "renovate.json")
 
 
