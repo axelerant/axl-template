@@ -1,4 +1,16 @@
 
+0.4.2 / 2020-07-22
+==================
+
+* Add check for a valid name
+* Disable aggregation when running via Lando (#15)
+* Add Dockerfile to produce a Docker image on release
+* Ignore platform reqs when running composer install
+* Add Docker build to workflow
+* Add modules & themes custom directory (#18)
+* fix: phpcs errors on initial commits (#17)
+* Fix configuration to load custom php.ini in lando
+
 0.4.1 / 2020-07-08
 ==================
 
