@@ -16,3 +16,6 @@ $databases['default']['default'] = [
 ];
 
 $settings['hash_salt'] = md5(getenv('LANDO_HOST_IP'));
+$settings['container_yamls'][] = DRUPAL_ROOT . '/sites/development.services.yml';
+$config['system.performance']['css']['preprocess'] = FALSE;
+$config['system.performance']['js']['preprocess'] = FALSE;
