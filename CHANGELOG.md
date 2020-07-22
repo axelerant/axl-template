@@ -1,4 +1,9 @@
 
+0.4.3 / 2020-07-22
+==================
+
+* Move docker-build workflow to proper location
+
 0.4.2 / 2020-07-22
 ==================
 
