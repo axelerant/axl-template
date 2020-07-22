@@ -95,10 +95,6 @@ def main(
     Create a Drupal site template with NAME.
     Where NAME is the name of your application package (e.g., axelerant/site)
     """
-    if "/" not in name:
-        util.write_error(
-            "The name argument should consist of vendor name and project name, separated by /."
-        )
 
     if not no_install:
         ensure_memory_limit()
