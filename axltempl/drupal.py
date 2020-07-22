@@ -210,7 +210,9 @@ def run_composer_install():
         util.write_error("Cannot find composer. Aborting...")
         sys.exit(4)
 
-    composer_run = subprocess.run("composer install -o", shell=True, check=False)
+    composer_run = subprocess.run(
+        "composer install --ignore-platform-reqs -o", shell=True, check=False
+    )
     if composer_run.returncode != 0:
         util.write_error("Error when running 'composer install'. Aborting...")
         util.write_error("Make sure you have set an adequate PHP memory limit.")
