@@ -95,7 +95,6 @@ def main(
     Create a Drupal site template with NAME.
     Where NAME is the name of your application package (e.g., axelerant/site)
     """
-
     if not no_install:
         ensure_memory_limit()
 
