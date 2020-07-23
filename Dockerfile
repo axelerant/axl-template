@@ -2,6 +2,8 @@ FROM composer:1.10 AS composer
 
 FROM python:3.8-alpine
 
+LABEL io.whalebrew.name init-drupal
+
 COPY --from=composer /usr/lib/lib* /usr/lib/
 COPY --from=composer /usr/local/lib/php/ /usr/local/lib/php/
 COPY --from=composer /usr/local/bin/* /usr/local/bin/
