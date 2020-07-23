@@ -23,6 +23,35 @@ Install this script via `pip` (or `pip3`). You can use the command to upgrade th
 pip3 install --upgrade axl-template
 ```
 
+## Usage with Docker _(alternate)_
+
+Docker support is experimental right now and may throw errors. If you face issues with Docker support, please report an issue. To run `init-drupal` with Docker, run this command (for bash):
+
+```bash
+docker run -v $(pwd):/workdir axelerant/template:latest <init-drupal options>
+```
+
+The `ENTRYPOINT` is set to `init-drupal` and you can override it if you want to run other commands.
+
+```bash
+docker run -v $(pwd):/workdir -e init-lando axelerant/template:latest <init-lando options>
+```
+
+You can set aliases so that you don't have to type these commands every time.
+
+```bash
+alias init-drupal='docker run -v $(pwd):/workdir axelerant/template'
+alias init-lando='docker run -v $(pwd):/workdir -e init-lando axelerant/template'
+```
+
+### Updating with Docker
+
+Docker images are tagged along with each tagged version. The `latest` Docker tag will point to the latest tagged release. You can update the Docker image on your machine similar to any other Docker machine.
+
+```bash
+docker pull axelerant/template
+```
+
 ## init-drupal
 
 (*Requires Python 3.6+*)
