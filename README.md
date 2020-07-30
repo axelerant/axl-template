@@ -12,8 +12,10 @@ You need Python 3.6+ and pip to install and use this script. Follow [these instr
 
 The script relies on certain developer tools to be available when running.
 
-* git - To initialise the project as a repository.
-* composer - To download the dependencies. If composer is not present, the dependencies don't get downloaded.
+- git - To initialise the project as a repository.
+- composer - To download the dependencies. If composer is not present, the dependencies don't get downloaded.
+
+Alternatively, you can use Docker to run this command. See the section below on usage with Docker for more information.
 
 ## Installation
 
