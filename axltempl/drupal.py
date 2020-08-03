@@ -26,7 +26,7 @@ DEFAULT_CORE_VERSION = "^8.9.0"
     help="Directory where the files should be set up (e.g., drupal). "
     + "The directory will be emptied.",
     type=click.Path(exists=False, file_okay=False),
-    default="drupal",
+    default=".",
     show_default=True,
 )
 @click.option("--description", help="Description of the package", default="")
@@ -138,7 +138,6 @@ def main(
         util.write_info("Adding GitLab support...")
         gitlab.generate_gitlab_files(docroot)
 
-    os.chdir("..")
     return 0
 
 
@@ -186,25 +185,35 @@ def ensure_memory_limit():
 
 def prepare_base_directory(directory, force):
     """
-    Create the base directory while deleting it if forced.
+    Create the base directory while deleting the files if forced.
     We need the directory to be empty.
     """
-    if os.path.isdir(directory):
-        if not force:
-            util.write_error(
-                f'The "{directory}" directory already exists.'
-                + "Please delete it before running or use the -f option."
-            )
-            sys.exit(2)
-        util.write_warning(f'Removing "{directory}" directory...')
-        try:
-            shutil.rmtree(directory)
-        except OSError as err:
-            util.write_error(f'Failed deleting the "{directory}" directory')
-            util.write_error(str(err))
-            sys.exit(2)
+    if directory in ("", "."):
+        directory = os.getcwd()
 
-    os.mkdir(directory)
+    if not os.path.exists(directory):
+        os.mkdir(directory)
+        return
+
+    files_to_del = os.listdir(directory)
+    if len(files_to_del) > 0 and not force:
+        util.write_error(
+            "The directory needs to be empty for this command to run. "
+            + "Please delete the files or use the -f option."
+        )
+        sys.exit(2)
+
+    try:
+        for file in files_to_del:
+            util.write_warning(f'Removing "{file}"...')
+            if os.path.isdir(file):
+                shutil.rmtree(file)
+            else:
+                os.remove(file)
+    except OSError as err:
+        util.write_error(f'Failed deleting files in the "{directory}" directory')
+        util.write_error(str(err))
+        sys.exit(2)
 
 
 def run_composer_install():
