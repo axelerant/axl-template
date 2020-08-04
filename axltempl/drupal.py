@@ -11,6 +11,7 @@ import sys
 
 import click
 
+from . import click_types
 from . import gitlab
 from . import lando
 from . import util
@@ -20,7 +21,7 @@ DEFAULT_CORE_VERSION = "^8.9.0"
 
 
 @click.command()
-@click.argument("name")
+@click.argument("name", type=click_types.COMPOSER_PACKAGE)
 @click.option(
     "--directory",
     help="Directory where the files should be set up (e.g., drupal). "
@@ -95,11 +96,6 @@ def main(
     Create a Drupal site template with NAME.
     Where NAME is the name of your application package (e.g., axelerant/site)
     """
-    if "/" not in name:
-        util.write_error(
-            "The name argument should consist of vendor name and project name, separated by /."
-        )
-
     if not no_install:
         ensure_memory_limit()
 
@@ -108,7 +104,7 @@ def main(
     os.system('git init; git commit --allow-empty -m "Initial commit"')
 
     generate_drupal_files(
-        name=name,
+        name=name.get_name(),
         description=description,
         core=core_package,
         core_version=core_version,

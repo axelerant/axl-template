@@ -63,3 +63,28 @@ def write_important(line, prefix="[IMPORTANT] "):
     Write a single info line with important prefix
     """
     click.secho(prefix + line, fg="green", bold=True)
+
+
+class ComposerVersion:
+    """
+    Utility class to represent a composer package version
+    """
+
+    def __init__(self, name, version=""):
+        parts = name.split("/")
+        if len(parts) != 2:
+            raise ValueError(f"{name} is not a valid composer package name")
+        self.name = name
+        self.version = version
+
+    def get_name(self):
+        """
+        Get the name of the composer package
+        """
+        return self.name
+
+    def get_version(self):
+        """
+        Get the version of the composer package (if any)
+        """
+        return self.version
