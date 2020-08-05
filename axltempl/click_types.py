@@ -20,7 +20,7 @@ class ComposerPackage(click.ParamType):
     def convert(self, value, param, ctx):
         packages = shlex.split(value)
 
-        return map(ComposerPackage.parse_package, packages)
+        return list(map(ComposerPackage.parse_package, packages))
 
     @staticmethod
     def parse_package(value):
