@@ -98,7 +98,6 @@ def main(
     if not no_install:
         ensure_memory_limit()
 
-    name = name[0]
     if directory == "":
         directory = name.get_package_name()
 

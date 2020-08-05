@@ -77,6 +77,9 @@ class ComposerVersion:
         self.name = name
         self.package_vendor = parts[0]
         self.package_name = parts[1]
+
+        if " " in version and not ("'" in version or '"' in version):
+            version = f'"{version}"'
         self.version = version
 
     @staticmethod

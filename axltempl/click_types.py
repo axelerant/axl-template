@@ -10,17 +10,28 @@ from click.exceptions import BadParameter
 from . import util
 
 
-class ComposerPackage(click.ParamType):
+class ComposerPackages(click.ParamType):
     """
-    Composer package type for click
+    Click type to represent a list of composer packages
     """
 
-    name = "composer_package"
+    name = "composer_packages"
 
     def convert(self, value, param, ctx):
         packages = shlex.split(value)
 
         return list(map(ComposerPackage.parse_package, packages))
+
+
+class ComposerPackage(click.ParamType):
+    """
+    Click type to represent a single composer package
+    """
+
+    name = "composer_package"
+
+    def convert(self, value, param, ctx):
+        return ComposerPackage.parse_package(value)
 
     @staticmethod
     def parse_package(value):
@@ -34,4 +45,5 @@ class ComposerPackage(click.ParamType):
         return composer_version
 
 
+COMPOSER_PACKAGES = ComposerPackages()
 COMPOSER_PACKAGE = ComposerPackage()
