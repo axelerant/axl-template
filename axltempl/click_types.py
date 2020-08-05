@@ -27,18 +27,11 @@ class ComposerPackage(click.ParamType):
         """
         Parse a composer package version string into a ComposerVersion type
         """
-        if ":" in value:
-            name, version = value.split(":")
-        else:
-            name = value
-            version = ""
-
-        parts = name.split("/")
-        if len(parts) == 1:
-            name = "drupal/" + name
-        elif len(parts) != 2:
-            raise BadParameter(f"{value} is not a valid composer package name")
-        return util.ComposerVersion(name, version)
+        try:
+            composer_version = util.ComposerVersion.from_package_string(value)
+        except ValueError as err:
+            raise BadParameter(err)
+        return composer_version
 
 
 COMPOSER_PACKAGE = ComposerPackage()

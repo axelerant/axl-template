@@ -79,6 +79,24 @@ class ComposerVersion:
         self.package_name = parts[1]
         self.version = version
 
+    @staticmethod
+    def from_package_string(package_string):
+        """
+        Parse a composer package version string into a ComposerVersion type
+        """
+        if ":" in package_string:
+            name, version = package_string.split(":")
+        else:
+            name = package_string
+            version = ""
+
+        parts = name.split("/")
+        if len(parts) == 1:
+            name = "drupal/" + name
+        elif len(parts) != 2:
+            raise ValueError(f"{package_string} is not a valid composer package name")
+        return ComposerVersion(name, version)
+
     def get_name(self):
         """
         Get the name of the composer package
