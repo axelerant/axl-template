@@ -25,10 +25,9 @@ DEFAULT_CORE_VERSION = "^8.9.0"
 @click.option(
     "--directory",
     help="Directory where the files should be set up (e.g., drupal). "
-    + "The directory will be emptied.",
+    + "The directory will be emptied. The default is based on the specified name.",
     type=click.Path(exists=False, file_okay=False),
-    default=".",
-    show_default=True,
+    default="",
 )
 @click.option("--description", help="Description of the package", default="")
 @click.option(
@@ -78,7 +77,7 @@ DEFAULT_CORE_VERSION = "^8.9.0"
     is_flag=True,
 )
 def main(
-    name,
+    name: util.ComposerVersion,
     directory,
     description,
     core_package,
@@ -98,6 +97,10 @@ def main(
     """
     if not no_install:
         ensure_memory_limit()
+
+    name = name[0]
+    if directory == "":
+        directory = name.get_package_name()
 
     prepare_base_directory(directory, force)
     os.chdir(directory)
