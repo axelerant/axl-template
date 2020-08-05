@@ -75,6 +75,8 @@ class ComposerVersion:
         if len(parts) != 2:
             raise ValueError(f"{name} is not a valid composer package name")
         self.name = name
+        self.package_vendor = parts[0]
+        self.package_name = parts[1]
         self.version = version
 
     def get_name(self):
@@ -82,6 +84,18 @@ class ComposerVersion:
         Get the name of the composer package
         """
         return self.name
+
+    def get_package_vendor(self):
+        """
+        Get the name of the package vendor, e.g., "drupal" in "drupal/module"
+        """
+        return self.package_vendor
+
+    def get_package_name(self):
+        """
+        Get the name of the package name, e.g., "module" in "drupal/module"
+        """
+        return self.package_name
 
     def get_version(self):
         """
