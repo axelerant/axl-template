@@ -46,6 +46,16 @@ alias init-drupal='docker run -v $(pwd):/workdir axelerant/template'
 alias init-lando='docker run -v $(pwd):/workdir -e init-lando axelerant/template'
 ```
 
+### Usage with whalebrew
+
+The Docker image works with [whalebrew](https://github.com/whalebrew/whalebrew). You can install the Docker image using the following:
+
+```bash
+whalebrew install axelerant/template
+```
+
+You can then use the command `init-drupal` as normal. Whalebrew takes care of the Docker syntax for you.
+
 ### Updating with Docker
 
 Docker images are tagged along with each tagged version. The `latest` Docker tag will point to the latest tagged release. You can update the Docker image on your machine similar to any other Docker machine.
