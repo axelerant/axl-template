@@ -73,7 +73,7 @@ Usage: init-drupal [OPTIONS] NAME
 Options:
   --directory DIRECTORY           Directory where the files should be set up
                                   (e.g., drupal). The directory will be
-                                  emptied.  [default: drupal]
+                                  emptied.  [default: .]
 
   --description TEXT              Description of the package
   -core, --core-package [core|recommended]
