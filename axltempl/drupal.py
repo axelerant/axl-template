@@ -262,7 +262,11 @@ def generate_drupal_files(
     util.copy_package_file("files/drupal/.env.example", ".env.example")
 
     os.makedirs("drush/sites", mode=0o755, exist_ok=True)
-    util.copy_package_file("files/drupal/drush.yml", "drush/drush.yml")
+
+    drush_yml = util.read_package_file("files/drupal/drush.yml")
+    drush_yml = drush_yml.replace("{name}", name)
+    util.write_file("drush/drush.yml", drush_yml)
+
     util.copy_package_file("files/drupal/self.site.yml", "drush/sites/self.site.yml")
 
     os.makedirs("config/sync", mode=0o755, exist_ok=True)
