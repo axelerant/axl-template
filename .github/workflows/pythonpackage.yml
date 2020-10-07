@@ -28,6 +28,7 @@ jobs:
         python -m pip install --upgrade pipenv
     - name: Install dependencies
       run: |
+        rm Pipfile.lock
         pipenv install --dev
     - name: Lint with pylint
       run: |
