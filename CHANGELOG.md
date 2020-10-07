@@ -1,4 +1,9 @@
 
+0.4.5 / 2020-10-07
+==================
+
+* Fix packaging error with the missing version
+
 0.4.4 / 2020-10-07
 ==================
 
