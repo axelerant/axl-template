@@ -1,4 +1,29 @@
 
+0.4.4 / 2020-10-07
+==================
+
+* Fix error when specifying the --lando option. Fixes #31
+* Enable tests on Python 3.9
+* Remove Pipfile.lock so that dependencies are installed as per Python version
+* Update Pipfile.lock
+* Don't ignore settings.php. Fixes #24
+* Fix code style issues reported by black and pylint
+* Use pipenv in Github actions
+* Add Pipfile
+* Add documentation for whalebrew
+* Add a new type to represent a single composer package
+* Run tests with Github
+* Add tests for click_types
+* Refactor parse_package method to move the logic into the util class
+* Set the default directory based on the package name
+* Ensure click_types.ComposerPackage returns a list
+* Add methods to get the package vendor and name to ComposerVersion
+* Fixes #20: Allow the current directory to be specified (#21)
+* Add Click param types to represent a composer package
+* Update documentation to provide alternative for system requirements.
+* Add documentation to run using Docker
+* Set the name for the command when used via whalebrew
+
 0.4.3 / 2020-07-22
 ==================
 
