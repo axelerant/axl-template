@@ -41,7 +41,7 @@ class ComposerPackage(click.ParamType):
         try:
             composer_version = util.ComposerVersion.from_package_string(value)
         except ValueError as err:
-            raise BadParameter(err)
+            raise BadParameter from err
         return composer_version
 
 

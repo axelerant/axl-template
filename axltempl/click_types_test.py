@@ -23,10 +23,12 @@ class ComposerPackagesTest(unittest.TestCase):
 
     def test_valid_package_with_complex_version(self):
         cp = ComposerPackages()
-        cplist = cp('drupal/views:"^3.0 || ^4.0" drupal/ctool:">1.0 <1.5" drupal/pathauto:"^1.0||^2.0"')
+        cplist = cp(
+            'drupal/views:"^3.0 || ^4.0" drupal/ctool:">1.0 <1.5" drupal/pathauto:"^1.0||^2.0"'
+        )
         self.assertEqual(cplist[0].get_version(), '"^3.0 || ^4.0"')
         self.assertEqual(cplist[1].get_version(), '">1.0 <1.5"')
-        self.assertEqual(cplist[2].get_version(), '^1.0||^2.0')
+        self.assertEqual(cplist[2].get_version(), "^1.0||^2.0")
 
 
 class ComposerPackageTest(unittest.TestCase):
