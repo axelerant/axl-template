@@ -127,10 +127,8 @@ def main(
     write_settings_env(docroot)
 
     if add_lando:
-        name = name.split("/")
-        name = name[1] if len(name) == 2 else name[0]
         util.write_info("Adding Lando support...")
-        lando.generate_lando_files(name, docroot, cache)
+        lando.generate_lando_files(name.get_package_name(), docroot, cache)
 
     if add_gitlab:
         util.write_info("Adding GitLab support...")
