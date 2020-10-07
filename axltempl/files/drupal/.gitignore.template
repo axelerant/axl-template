@@ -8,7 +8,6 @@
 /{docroot}/libraries/
 
 # Ignore sensitive information
-/{docroot}/sites/*/settings.php
 /{docroot}/sites/*/settings.local.php
 
 # Ignore Drupal's file directory
