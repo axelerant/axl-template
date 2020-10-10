@@ -10,6 +10,7 @@ click = "*"
 black = "*"
 pytest = "*"
 pylint = "*"
+pep517 = "*"
 
 [pipenv]
 allow_prereleases = true

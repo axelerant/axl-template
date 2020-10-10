@@ -3,5 +3,5 @@
 set -ex
 
 rm -rf  build/* dist/*
-python3 setup.py sdist bdist_wheel
+python -m pep517.build .
 twine upload dist/*
