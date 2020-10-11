@@ -59,6 +59,16 @@ DEFAULT_CORE_VERSION = "^8.9.0"
     show_default=True,
 )
 @click.option(
+    "--module",
+    "--package",
+    "-m",
+    "-p",
+    "packages",
+    type=click_types.COMPOSER_PACKAGE,
+    help="Specify Drupal module names or PHP packages",
+    multiple=True,
+)
+@click.option(
     "--docroot", help="The document root", type=click.Path(exists=False), default="web"
 )
 @click.option(
@@ -80,6 +90,7 @@ def main(
     description,
     core_package,
     core_version,
+    packages,
     docroot,
     cache,
     add_lando,
@@ -112,6 +123,7 @@ def main(
     )
 
     composer.run_install()
+    composer.require_packages(packages)
 
     settings_file = ensure_settings_file(docroot)
     modify_settings_file(
