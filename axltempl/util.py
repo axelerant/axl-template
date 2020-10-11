@@ -65,61 +65,11 @@ def write_important(line, prefix="[IMPORTANT] "):
     click.secho(prefix + line, fg="green", bold=True)
 
 
-class ComposerVersion:
+def sort_dictionary_by_keys(input_dict):
     """
-    Utility class to represent a composer package version
+    Sort the dictionary by keys in alphabetical order
     """
-
-    def __init__(self, name, version=""):
-        parts = name.split("/")
-        if len(parts) != 2:
-            raise ValueError(f"{name} is not a valid composer package name")
-        self.name = name
-        self.package_vendor = parts[0]
-        self.package_name = parts[1]
-
-        if " " in version and not ("'" in version or '"' in version):
-            version = f'"{version}"'
-        self.version = version
-
-    @staticmethod
-    def from_package_string(package_string):
-        """
-        Parse a composer package version string into a ComposerVersion type
-        """
-        if ":" in package_string:
-            name, version = package_string.split(":")
-        else:
-            name = package_string
-            version = ""
-
-        parts = name.split("/")
-        if len(parts) == 1:
-            name = "drupal/" + name
-        elif len(parts) != 2:
-            raise ValueError(f"{package_string} is not a valid composer package name")
-        return ComposerVersion(name, version)
-
-    def get_name(self):
-        """
-        Get the name of the composer package
-        """
-        return self.name
-
-    def get_package_vendor(self):
-        """
-        Get the name of the package vendor, e.g., "drupal" in "drupal/module"
-        """
-        return self.package_vendor
-
-    def get_package_name(self):
-        """
-        Get the name of the package name, e.g., "module" in "drupal/module"
-        """
-        return self.package_name
-
-    def get_version(self):
-        """
-        Get the version of the composer package (if any)
-        """
-        return self.version
+    sorted_dict = {}
+    for key in sorted(input_dict.keys()):
+        sorted_dict[key] = input_dict[key]
+    return sorted_dict

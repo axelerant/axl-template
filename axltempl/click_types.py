@@ -7,7 +7,7 @@ import shlex
 import click
 from click.exceptions import BadParameter
 
-from . import util
+from . import composer
 
 
 class ComposerPackages(click.ParamType):
@@ -39,7 +39,7 @@ class ComposerPackage(click.ParamType):
         Parse a composer package version string into a ComposerVersion type
         """
         try:
-            composer_version = util.ComposerVersion.from_package_string(value)
+            composer_version = composer.ComposerVersion.from_package_string(value)
         except ValueError as err:
             raise BadParameter from err
         return composer_version
