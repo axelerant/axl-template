@@ -1,4 +1,25 @@
 
+0.5.0 / 2020-10-10
+==================
+
+* Merge pull request #38 from axelerant/modules
+* refactor: use list comprehension
+* feat: allow specifying composer packages and Drupal modules. Fixes #13
+* feat: conditionally add drupal optimizations only on composer 1. Fixes #37
+* feat: allow ComposerVersion objects to be printed
+* fix: delete the correct path. Fixes #35
+* fix: ensure composer doesn't prompt for anything. Fixes #36
+* Merge pull request #34 from axelerant/composer-refactor
+* refactor: move all composer related code into a utility class
+* Merge pull request #33 from axelerant/rem-noinstall
+* style: run black formatter
+* feat: remove --no-install option. Fixes #23
+* Merge pull request #26 from mohit-rocks/main
+* chore: use pep517 to build the package
+* chore: move to declarative config for setuptools
+* Create LICENSE
+* Added changes to add uri options in drush.yml.
+
 0.4.5 / 2020-10-07
 ==================
 
