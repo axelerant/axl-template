@@ -99,6 +99,10 @@ def get_drupal_template(name, description, core, core_version, docroot, cache_se
     if cache_service == "memcache":
         composer["require"]["drupal/memcache"] = "^2.0"
     composer["require"]["drupal/core-composer-scaffold"] = core_version
+
+    if not is_version_2():
+        composer["require"]["zaporylie/composer-drupal-optimizations"] = "^1.1"
+
     return composer
 
 
