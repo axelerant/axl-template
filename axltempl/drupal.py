@@ -121,7 +121,8 @@ def main(
 
     settings_file = ensure_settings_file(docroot)
     modify_settings_file(
-        settings_file, "$settings['config_sync_directory'] = '../config/sync';",
+        settings_file,
+        "$settings['config_sync_directory'] = '../config/sync';",
     )
 
     write_settings_env(docroot)
