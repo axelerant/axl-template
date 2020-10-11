@@ -1,4 +1,9 @@
 
+0.5.1 / 2020-10-10
+==================
+
+* fix: ensure twine is present and run deployment commands through pipenv
+
 0.5.0 / 2020-10-10
 ==================
 
