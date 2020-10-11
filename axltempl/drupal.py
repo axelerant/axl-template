@@ -196,10 +196,11 @@ def prepare_base_directory(directory, force):
     try:
         for file in files_to_del:
             util.write_warning(f'Removing "{file}"...')
-            if os.path.isdir(file):
-                shutil.rmtree(file)
+            path = f"./{directory}/{file}"
+            if os.path.isdir(path):
+                shutil.rmtree(path)
             else:
-                os.remove(file)
+                os.remove(path)
     except OSError as err:
         util.write_error(f'Failed deleting files in the "{directory}" directory')
         util.write_error(str(err))
