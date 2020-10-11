@@ -85,9 +85,7 @@ def require_packages(packages, dev=False):
     cmd = "composer require "
     if dev:
         cmd += "--dev "
-
-    for package in packages:
-        cmd += str(package) + " "
+    cmd += " ".join([str(p) for p in packages])
 
     composer_run = subprocess.run(cmd, shell=True, check=False)
     if composer_run.returncode != 0:
