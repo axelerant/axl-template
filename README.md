@@ -92,7 +92,6 @@ Options:
   --recommended                   Select the drupal/core-recommended package
   --core-version TEXT             Drupal core version  [default: ^8.9.0]
   --docroot PATH                  The document root
-  --no-install                    Do not run composer install
   --cache [redis|memcache]        Add a cache service
   --lando                         Add Lando support
   --gitlab                        Add GitLab support

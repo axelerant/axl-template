@@ -60,8 +60,7 @@ def generate_gitlab_files(docroot):
             + "Unable to generate GitLab CI configuration files."
         )
         util.write_info(
-            "This is probably due to composer installation failure "
-            + "(or you specified --no-install). "
+            "This is probably due to composer installation failure. "
             + "Run init-gitlab after running composer install."
         )
         return 2

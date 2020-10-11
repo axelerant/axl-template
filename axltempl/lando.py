@@ -80,8 +80,7 @@ def generate_lando_files(name, docroot, cache):
             + "Unable to generate lando override configuration files."
         )
         util.write_info(
-            "This is probably due to composer installation failure "
-            + "(or you specified --no-install). "
+            "This is probably due to composer installation failure. "
             + "Run init-lando after running composer install."
         )
         return 2
