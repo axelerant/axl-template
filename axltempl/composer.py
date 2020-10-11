@@ -56,7 +56,7 @@ def run_install():
         sys.exit(4)
 
     composer_run = subprocess.run(
-        "composer install --ignore-platform-reqs -o", shell=True, check=False
+        "composer install --no-interaction --ignore-platform-reqs -o", shell=True, check=False
     )
     if composer_run.returncode != 0:
         util.write_error("Error when running 'composer install'. Aborting...")
