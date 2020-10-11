@@ -11,6 +11,7 @@ black = "*"
 pytest = "*"
 pylint = "*"
 pep517 = "*"
+twine = "*"
 
 [pipenv]
 allow_prereleases = true
