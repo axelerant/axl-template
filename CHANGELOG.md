@@ -1,4 +1,9 @@
 
+0.5.3 / 2020-10-10
+==================
+
+* fix: specify the correct content type for description
+
 0.5.2 / 2020-10-10
 ==================
 
