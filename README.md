@@ -83,7 +83,8 @@ Usage: init-drupal [OPTIONS] NAME
 Options:
   --directory DIRECTORY           Directory where the files should be set up
                                   (e.g., drupal). The directory will be
-                                  emptied.  [default: .]
+                                  emptied. The default is based on the
+                                  specified name.
 
   --description TEXT              Description of the package
   -core, --core-package [core|recommended]
@@ -91,6 +92,8 @@ Options:
   --core                          Select the drupal/core package
   --recommended                   Select the drupal/core-recommended package
   --core-version TEXT             Drupal core version  [default: ^8.9.0]
+  -m, -p, --module, --package COMPOSER_PACKAGE
+                                  Specify Drupal module names or PHP packages
   --docroot PATH                  The document root
   --cache [redis|memcache]        Add a cache service
   --lando                         Add Lando support
@@ -104,10 +107,10 @@ Options:
 ### Example
 
 ```bash
-init-drupal axelerant/site --cache redis --core
+init-drupal axelerant/site --cache redis --core -m admin_toolbar
 ```
 
-The above command will generate a composer.json and in a `drupal` directory and run `composer install`. It will use the regular `drupal/core` package along with the Redis module and few other packages.
+The above command will generate a composer.json and in a `drupal` directory and run `composer install`. It will use the regular `drupal/core` package along with the Redis module and few other packages. Finally, it will add the admin_toolbar module as well.
 
 ## init-lando
 
