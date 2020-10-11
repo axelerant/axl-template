@@ -71,6 +71,36 @@ def run_install():
         sys.exit(4)
 
 
+def require_packages(packages, dev=False):
+    """
+    Run composer require or require --dev
+    """
+    if not is_present():
+        util.write_error("Cannot find composer. Aborting...")
+        sys.exit(4)
+
+    if len(packages) == 0:
+        return
+
+    cmd = "composer require "
+    if dev:
+        cmd += "--dev "
+
+    for package in packages:
+        cmd += str(package) + " "
+
+    composer_run = subprocess.run(cmd, shell=True, check=False)
+    if composer_run.returncode != 0:
+        util.write_error("Error when running 'composer require'. Aborting...")
+        util.write_error("Make sure you have set an adequate PHP memory limit.")
+        util.write_warning(
+            "Read {} for more details".format(
+                "https://getcomposer.org/doc/articles/troubleshooting.md#memory-limit-errors"
+            )
+        )
+        sys.exit(4)
+
+
 def get_drupal_template(name, description, core, core_version, docroot, cache_service):
     """
     Get the composer template from package and modify it as per given options
@@ -180,7 +210,7 @@ class ComposerVersion:
         """
         package_str = self.name
         if self.version:
-            package_str += ":" + self.version
+            package_str += f':"{self.version}"'
         return package_str
 
     def __repr__(self) -> str:
