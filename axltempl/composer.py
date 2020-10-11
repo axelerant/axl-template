@@ -56,7 +56,9 @@ def run_install():
         sys.exit(4)
 
     composer_run = subprocess.run(
-        "composer install --no-interaction --ignore-platform-reqs -o", shell=True, check=False
+        "composer install --no-interaction --ignore-platform-reqs -o",
+        shell=True,
+        check=False,
     )
     if composer_run.returncode != 0:
         util.write_error("Error when running 'composer install'. Aborting...")
@@ -167,3 +169,18 @@ class ComposerVersion:
         Get the version of the composer package (if any)
         """
         return self.version
+
+    def __str__(self) -> str:
+        """
+        Get string representation of the composer string
+        """
+        package_str = self.name
+        if self.version:
+            package_str += ":" + self.version
+        return package_str
+
+    def __repr__(self) -> str:
+        """
+        Get string representation of the composer string
+        """
+        return self.__str__()
