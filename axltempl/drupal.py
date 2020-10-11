@@ -61,9 +61,6 @@ DEFAULT_CORE_VERSION = "^8.9.0"
     "--docroot", help="The document root", type=click.Path(exists=False), default="web"
 )
 @click.option(
-    "--no-install", help="Do not run composer install", is_flag=True, default=False
-)
-@click.option(
     "--cache",
     help="Add a cache service",
     type=click.Choice(["redis", "memcache"], case_sensitive=False),
@@ -83,7 +80,6 @@ def main(
     core_package,
     core_version,
     docroot,
-    no_install,
     cache,
     add_lando,
     add_gitlab,
@@ -95,8 +91,7 @@ def main(
     Create a Drupal site template with NAME.
     Where NAME is the name of your application package (e.g., axelerant/site)
     """
-    if not no_install:
-        ensure_memory_limit()
+    ensure_memory_limit()
 
     if directory == "":
         directory = name.get_package_name()
@@ -114,10 +109,7 @@ def main(
         cache_service=cache,
     )
 
-    if not no_install:
-        run_composer_install()
-    else:
-        util.write_info("Remember to run 'composer install' manually.")
+    run_composer_install()
 
     settings_file = ensure_settings_file(docroot)
     modify_settings_file(
@@ -143,7 +135,6 @@ def ensure_memory_limit():
     """
     if shutil.which("php") is None:
         util.write_error("Cannot find php.")
-        util.write_error("Run with --no-install flag if you don't need composer.")
         sys.exit(3)
 
     mem_limit = os.getenv("COMPOSER_MEMORY_LIMIT")
