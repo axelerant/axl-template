@@ -1,6 +1,7 @@
 name: {name}
 recipe: drupal8
-
+env_file:
+  - .lando/defaults.env
 services:
   appserver:
     type: php:7.4

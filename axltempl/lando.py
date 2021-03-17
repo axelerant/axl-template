@@ -102,4 +102,8 @@ def generate_lando_files(name, docroot, cache):
         "Change the database image from mariadb to your desired image in .lando.yml."
     )
 
+    env_file = util.read_package_file("files/drupal/.env.example")
+    env_file = env_file.replace("{name}", name)
+    util.write_file(".lando/defaults.env", env_file)
+
     return 0
