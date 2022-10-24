@@ -64,9 +64,8 @@ def run_install():
         util.write_error("Error when running 'composer install'. Aborting...")
         util.write_error("Make sure you have set an adequate PHP memory limit.")
         util.write_warning(
-            "Read {} for more details".format(
-                "https://getcomposer.org/doc/articles/troubleshooting.md#memory-limit-errors"
-            )
+            "Read https://getcomposer.org/doc/articles/troubleshooting.md#memory-limit-errors"
+            + " for more details"
         )
         sys.exit(4)
 
@@ -92,9 +91,8 @@ def require_packages(packages, dev=False):
         util.write_error("Error when running 'composer require'. Aborting...")
         util.write_error("Make sure you have set an adequate PHP memory limit.")
         util.write_warning(
-            "Read {} for more details".format(
-                "https://getcomposer.org/doc/articles/troubleshooting.md#memory-limit-errors"
-            )
+            "Read https://getcomposer.org/doc/articles/troubleshooting.md#memory-limit-errors"
+            + " for more details"
         )
         sys.exit(4)
 

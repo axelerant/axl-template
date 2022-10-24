@@ -173,9 +173,8 @@ def ensure_memory_limit():
     util.write_error("- PHP settings - memory_limit option")
     util.write_error("- COMPOSER_MEMORY_LIMIT environment variable")
     util.write_warning(
-        "Read {} for more details".format(
-            "https://getcomposer.org/doc/articles/troubleshooting.md#memory-limit-errors"
-        )
+        "Read https://getcomposer.org/doc/articles/troubleshooting.md#memory-limit-errors"
+        + " for more details"
     )
     should_continue = click.prompt(
         "Do you want to continue anyway?", "yes", show_default=True
@@ -239,7 +238,7 @@ def generate_drupal_files(
         cache_service=cache_service,
     )
     composer_template = composer.sort_packages(composer_template)
-    with open("composer.json", "w") as composer_file:
+    with open("composer.json", "w", encoding="utf-8") as composer_file:
         json.dump(composer_template, composer_file, indent=4)
     util.write_file(".gitignore", get_gitignore(docroot))
 
