@@ -12,8 +12,6 @@ COPY --from=composer /usr/share/git-core /usr/share/git-core/
 COPY --from=composer /usr/libexec/ /usr/libexec/
 COPY --from=composer /usr/bin/composer /usr/bin/git* /usr/bin/ssh* /usr/bin/
 
-RUN composer global require hirak/prestissimo
-
 COPY . /home/axl-template/
 WORKDIR /home/axl-template
 
