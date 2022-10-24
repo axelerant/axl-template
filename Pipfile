@@ -9,8 +9,8 @@ click = "*"
 [dev-packages]
 black = "*"
 pytest = "*"
-pylint = "*"
 pep517 = "*"
+pylint = "~=2.0"
 
 [pipenv]
-allow_prereleases = true
+allow_prereleases = false
