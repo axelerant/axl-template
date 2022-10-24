@@ -1,4 +1,11 @@
 
+0.6.1 / 2022-10-24
+==================
+
+* fix: set correct version for python build
+* feat: update Dockerfile to use latest versions of composer and Python
+* ci: use metadata action to generate better tags for Docker build
+
 0.6.0 / 2022-10-24
 ==================
 
