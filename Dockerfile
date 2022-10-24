@@ -1,6 +1,6 @@
-FROM composer:1.10 AS composer
+FROM composer:2 AS composer
 
-FROM python:3.8-alpine
+FROM python:3.10-alpine
 
 LABEL io.whalebrew.name init-drupal
 
