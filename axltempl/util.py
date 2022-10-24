@@ -10,7 +10,7 @@ def read_file(file):
     """
     Read entire file contents
     """
-    with open(file, "r") as fobj:
+    with open(file, "r", encoding="utf-8") as fobj:
         return fobj.read()
     return ""
 
@@ -26,7 +26,7 @@ def write_file(file, contents):
     """
     Write contents to a file
     """
-    with open(file, "w") as fobj:
+    with open(file, "w", encoding="utf-8") as fobj:
         fobj.write(contents)
 
 
