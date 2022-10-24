@@ -11,6 +11,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Docker meta
+      id: meta
+      uses: docker/metadata-action@v4
+      with:
+        images: |
+          axelerant/template
+        tags: |
+          type=semver,pattern={{raw}}
+          type=semver,pattern={{major}}.{{minor}}
+          type=semver,pattern={{major}}
+
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
@@ -24,4 +35,4 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: axelerant/template:latest
+        tags: ${{ steps.meta.outputs.tags }}
