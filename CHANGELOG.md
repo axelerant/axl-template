@@ -1,4 +1,10 @@
 
+0.6.2 / 2022-10-24
+==================
+
+* fix: remove unnecessary package hirak/prestissimo
+* docs: update README
+
 0.6.1 / 2022-10-24
 ==================
 
