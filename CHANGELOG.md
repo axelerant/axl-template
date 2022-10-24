@@ -1,4 +1,30 @@
 
+0.6.0 / 2022-10-24
+==================
+
+* feat: update packages in composer.json to modern Drupal 9 requirements
+* chore: update vscode settings
+* ci: enable caching for pipenv
+* fix: yaml formatting error in github workflow
+* chore: update to docker/build-push-action@v3
+* ci: test on Python 3.10
+* fix: disable cyclic-import for pylint
+* fix: pylint consider-using-fstring
+* fix: pylint unspecified-import
+* chore: reintroduce pylintrc settings after regeneration
+* chore: regenerate pylintrc after updates
+* fix: use a stable version of pylint
+* Merge pull request #47 from axelerant/dependabot/github_actions/actions/setup-python-4
+* Bump actions/setup-python from 2 to 4
+* Merge pull request #46 from axelerant/dependabot/github_actions/actions/checkout-3
+* Bump actions/checkout from 2 to 3
+* Create dependabot.yml
+* chore: update all dependencies
+* feature: update default Drupal core version to 9.4
+* Fix duplicate-code issue with pylint.
+* Update all dependencies
+* docs: add docs for the new packages option
+
 0.5.3 / 2020-10-10
 ==================
 
