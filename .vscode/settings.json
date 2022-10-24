@@ -1,6 +1,6 @@
 {
   "python.linting.pylintEnabled": true,
   "python.formatting.provider": "black",
-  "python.pythonPath": "python3",
-  "files.autoSave": "onFocusChange"
+  "files.autoSave": "onFocusChange",
+  "python.linting.enabled": true
 }
