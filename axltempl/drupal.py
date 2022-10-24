@@ -18,7 +18,7 @@ from . import util
 from . import composer
 
 
-DEFAULT_CORE_VERSION = "^8.9.0"
+DEFAULT_CORE_VERSION = "^9.4.0"
 
 
 @click.command()
