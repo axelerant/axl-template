@@ -1,6 +1,6 @@
 # Template scripts
 
-A set of scaffolding tools for use at Axelerant. Currently it supports:
+A set of scaffolding tools for use at Axelerant. Currently, it supports:
 
 - [Drupal](#init-drupal)
 - [Lando](#init-lando)
@@ -8,11 +8,11 @@ A set of scaffolding tools for use at Axelerant. Currently it supports:
 
 ## Requirements
 
-You need Python 3.6+ and pip to install and use this script. Follow [these instructions](https://pip.pypa.io/en/stable/installing/) to install pip if you don't already have it.
+You need Python 3.7+ and pip to install and use this script. Follow [these instructions](https://pip.pypa.io/en/stable/installing/) to install pip if you don't already have it.
 
 The script relies on certain developer tools to be available when running.
 
-- git - To initialise the project as a repository.
+- git - To initialize the project as a repository.
 - composer - To download the dependencies. If composer is not present, the dependencies don't get downloaded.
 
 Alternatively, you can use Docker to run this command. See the section below on usage with Docker for more information.
@@ -66,7 +66,7 @@ docker pull axelerant/template
 
 ## init-drupal
 
-(*Requires Python 3.6+*)
+(*Requires Python 3.7+*)
 
 Scaffold a Drupal codebase in a subdirectory.
 
@@ -91,7 +91,7 @@ Options:
                                   Select the core package
   --core                          Select the drupal/core package
   --recommended                   Select the drupal/core-recommended package
-  --core-version TEXT             Drupal core version  [default: ^8.9.0]
+  --core-version TEXT             Drupal core version  [default: ^9.4.0]
   -m, -p, --module, --package COMPOSER_PACKAGE
                                   Specify Drupal module names or PHP packages
   --docroot PATH                  The document root
@@ -114,7 +114,7 @@ The above command will generate a composer.json and in a `drupal` directory and 
 
 ## init-lando
 
-(*Requires Python 3.6+*)
+(*Requires Python 3.7+*)
 
 Scaffold Lando configuration for a Drupal site in the current directory.
 
@@ -130,7 +130,7 @@ Lando support can also be added when running `init-drupal` by passing the `--lan
 
 ## init-gitlab
 
-(*Requires Python 3.6+*)
+(*Requires Python 3.7+*)
 
 Scaffold GitLab configuration for a Drupal site in the current directory.
 
