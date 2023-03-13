@@ -10,7 +10,7 @@ click = "*"
 black = "*"
 pytest = "*"
 pep517 = "*"
-pylint = "~=2.15"
+pylint = "~=2.17"
 
 [pipenv]
 allow_prereleases = false
