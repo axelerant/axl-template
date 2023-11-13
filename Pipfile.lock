@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "5ecadd267598324b86ec167b92a4fc8d4ae7dfd1b0b6159e96bc80d257fabdc5"
+            "sha256": "3cfb32b6ad2714db570208730b40b456885fdbc8d9e5ac46e3b4ed3aa5996086"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -27,11 +27,11 @@
     "develop": {
         "astroid": {
             "hashes": [
-                "sha256:1aa149fc5c6589e3d0ece885b4491acd80af4f087baafa3fb5203b113e68cd3c",
-                "sha256:6c107453dffee9055899705de3c9ead36e74119cee151e5a9aaf7f0b0e020a6a"
+                "sha256:7d5895c9825e18079c5aeac0572bc2e4c83205c95d416e0b4fee8bc361d2d9ca",
+                "sha256:86b0bb7d7da0be1a7c4aedb7974e391b32d4ed89e33de6ed6902b4b15c97577e"
             ],
-            "markers": "python_full_version >= '3.7.2'",
-            "version": "==2.15.8"
+            "markers": "python_full_version >= '3.8.0'",
+            "version": "==3.0.1"
         },
         "black": {
             "hashes": [
@@ -191,12 +191,12 @@
         },
         "pylint": {
             "hashes": [
-                "sha256:27a8d4c7ddc8c2f8c18aa0050148f89ffc09838142193fdbe98f172781a3ff87",
-                "sha256:f4fcac7ae74cfe36bc8451e931d8438e4a476c20314b1101c458ad0f05191fad"
+                "sha256:0d4c286ef6d2f66c8bfb527a7f8a629009e42c99707dec821a03e1b51a4c1496",
+                "sha256:60ed5f3a9ff8b61839ff0348b3624ceeb9e6c2a92c514d81c9cc273da3b6bcda"
             ],
             "index": "pypi",
-            "markers": "python_full_version >= '3.7.2'",
-            "version": "==2.17.7"
+            "markers": "python_full_version >= '3.8.0'",
+            "version": "==3.0.2"
         },
         "pytest": {
             "hashes": [
@@ -209,11 +209,11 @@
         },
         "tomlkit": {
             "hashes": [
-                "sha256:38e1ff8edb991273ec9f6181244a6a391ac30e9f5098e7535640ea6be97a7c86",
-                "sha256:712cbd236609acc6a3e2e97253dfc52d4c2082982a88f61b640ecf0817eab899"
+                "sha256:df32fab589a81f0d7dc525a4267b6d7a64ee99619cbd1eeb0fae32c1dd426977",
+                "sha256:eeea7ac7563faeab0a1ed8fe12c2e5a51c61f933f2502f7e9db0241a65163ad0"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==0.12.1"
+            "version": "==0.12.2"
         },
         "wrapt": {
             "hashes": [
