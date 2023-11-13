@@ -4,5 +4,3 @@
 # Docs at https://github.com/drush-ops/drush/blob/master/examples/example.drush.yml
 #
 # Edit or remove this file as needed.
-options:
-  uri: 'http://{name}.lndo.site/'
