@@ -145,3 +145,12 @@ No options are required. The tool reads the composer.json file and sets up the G
 These files are created by `init-gitlab` in the `.gitlab` directory and copied by a shell script (`ci.sh`). The `.gitlab-ci.yml` file is created in the project root directly.
 
 GitLab support can also be added when running `init-drupal` by passing the `--gitlab` option.
+
+## Contribution
+
+(*Requires Python 3.6+*)
+
+1. Fork this repository
+2. Clone the fork
+3. Execute `python setup.py install --user`
+4. Test your changes by calling any command, example `init-drupal`
